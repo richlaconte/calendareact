@@ -1,3 +1,3 @@
-import ReactDateActivityDisplay from './components/ReactDateActivityDisplay'
+import Calendar from './components/calendar'
 
-export { ReactDateActivityDisplay }
+export default Calendar

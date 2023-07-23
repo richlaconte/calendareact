@@ -1,7 +1,7 @@
 {
-  "name": "react-date-activity-display",
-  "version": "0.0.2",
-  "description": "A react.ts and MUI date activity display component",
+  "name": "calendareact",
+  "version": "0.0.1",
+  "description": "A TS calendar component built with MUI and Dayjs",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/richlaconte/react-date-activity-display.git"
+    "url": "git+https://github.com/richlaconte/calendareact.git"
   },
   "author": "Richard LaConte",
   "license": "MIT",
@@ -33,14 +33,21 @@
     "mui",
     "component",
     "date",
+    "calendar",
     "activity",
-    "display"
+    "display",
+    "dayjs",
+    "day",
+    "month",
+    "week"
   ],
   "dependencies": {
-    "@emotion/styled": "^11.10.5",
-    "@mui/material": "^5.11.8",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.1",
     "@types/react": "^18.0.28",
-    "react": "^18.2.0",
+    "dayjs": "^1.11.9",
+    "react": ">=16",
     "react-dom": "^18.2.0",
     "typescript": "^4.9.5"
   },
