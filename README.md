@@ -1,4 +1,4 @@
-# React Date Activity Display
+# calendaReact
 
 ![Month view](./src/Screen%20Shot%202023-07-24%20at%205.44.47%20PM.png)
 ![Week view](./src/Screen%20Shot%202023-07-24%20at%205.45.10%20PM.png)
