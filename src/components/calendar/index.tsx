@@ -5,6 +5,8 @@ import Month from './Month'
 
 import { Event } from './CalendarTypes'
 
+import CalendarContextProvider from '../../contexts/calendarContext'
+
 type CalendarProps = {
   view?: 'week' | 'month'
   events: Event[]
@@ -13,9 +15,18 @@ type CalendarProps = {
 }
 
 const Calendar: FC<CalendarProps> = ({ view, events, onSelectTime, onSelectEvent }) => {
-  if (view === 'week') return <Week events={events} onSelectTime={onSelectTime} onSelectEvent={onSelectEvent} />
+  if (view === 'week')
+    return (
+      <CalendarContextProvider view={view} events={events} onSelectTime={onSelectTime} onSelectEvent={onSelectEvent}>
+        <Week />
+      </CalendarContextProvider>
+    )
 
-  return <Month events={events} onSelectTime={onSelectTime} onSelectEvent={onSelectEvent} />
+  return (
+    <CalendarContextProvider view={view} events={events} onSelectTime={onSelectTime} onSelectEvent={onSelectEvent}>
+      <Month />
+    </CalendarContextProvider>
+  )
 }
 
 export default Calendar

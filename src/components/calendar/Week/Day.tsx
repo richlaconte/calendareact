@@ -8,15 +8,16 @@ dayjs.extend(isSameOrAfter)
 dayjs.extend(isSameOrBefore)
 
 import { Event } from '../CalendarTypes'
+import { useCalendar } from '../../../contexts/calendarContext'
 
 type DayProps = {
   day: Dayjs
   onSelectTime: (start: Dayjs, end: Dayjs) => unknown
   onSelectEvent: (event: Event | undefined) => unknown
-  events: Event[]
 }
 
-const Day: FC<DayProps> = ({ day, events, onSelectTime, onSelectEvent }) => {
+const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
+  const { events } = useCalendar()
   const [mouseDown, setMouseDown] = React.useState(false)
 
   const [start, setStart] = React.useState<{ day: null | Dayjs; hour: number }>({ day: null, hour: 0 })
@@ -125,7 +126,8 @@ const Day: FC<DayProps> = ({ day, events, onSelectTime, onSelectEvent }) => {
                 onMouseDown={(e: any) => {
                   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
                   const isEvent = e?.target?.classList?.contains('event')
-                  if (isEvent) return onSelectEvent(event)
+                  const isEventTitle = !isEvent && e?.target?.classList?.contains('eventTitle')
+                  if (isEvent || isEventTitle) return onSelectEvent(event)
                   setMouseDown(true)
                   setStart({ day, hour: i })
                   setEnd({ day, hour: i + 1 })
@@ -188,12 +190,16 @@ const Day: FC<DayProps> = ({ day, events, onSelectTime, onSelectEvent }) => {
                     {isStart && (
                       <Box maxWidth='100%' position='relative'>
                         <Typography
+                          className='eventTitle'
                           sx={{
                             userSelect: 'none',
-                            width: '100%',
+                            width: 'calc(100% - 20px)',
                             position: 'absolute',
                             left: '0',
                             right: '0',
+                            top: '0',
+                            marginTop: '10px',
+                            marginLeft: '10px',
                           }}
                           variant='caption'
                         >

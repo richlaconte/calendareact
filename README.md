@@ -1,40 +1,64 @@
 # React Date Activity Display
 
-![Example image](./react-date-activity-display.png)
+![Month view](./src/Screen%20Shot%202023-07-24%20at%205.44.47%20PM.png)
+![Week view](./src/Screen%20Shot%202023-07-24%20at%205.45.10%20PM.png)
 
 ## Usage
 Install:
-`npm i react-date-activity-display`
+`npm i calendareact`
 
 Use:
 ```
-import { ReactDateActivityDisplay } from 'react-date-activity-display'
+import Calendar, { Event } from 'calendareact'
 
-const today = new Date()
-const tenth = new Date().setDate(10)
-const fifteenth = new Date().setDate(15)
-const twentieth = new Date().setDate(20)
-
-export const test = [
-  new Date(today),
-  new Date(tenth),
-  new Date(fifteenth),
-  new Date(twentieth)
-]
+const [createEventOpen, setCreateEventOpen] = useState(false)
+const [editEventOpen, setEditEventOpen] = useState(false)
+const [start, setStart] = useState<Dayjs | null>(null)
+const [end, setEnd] = useState<Dayjs | null>(null)
+const [event, setEvent] = useState<Event | null | undefined>(null)
 
 const MyComponent = () => {
+  const events: Event[] = [
+    {
+      title: 'Test',
+      id: 'test',
+      start: today.startOf('hour').hour(12),
+      end: today.startOf('hour').hour(18)
+    },
+    {
+      title: 'Test 2',
+      id: 'test2',
+      start: today.startOf('hour').subtract(1, 'day').hour(8),
+      end: today.startOf('hour').subtract(1, 'day').hour(14)
+    },
+    {
+      title: 'Test 3',
+      id: 'test3',
+      start: today.startOf('hour').subtract(2, 'day').hour(10),
+      end: today.startOf('hour').subtract(2, 'day').hour(14)
+    },
+    {
+      title: 'Test 4',
+      id: 'test4',
+      start: today.startOf('hour').subtract(3, 'day').hour(9),
+      end: today.startOf('hour').subtract(3, 'day').hour(22)
+    }
+  ]
+
   return (
-    <ReactDateAcvitityDisplay dateValues={test} />
+    <Calendar
+      view='month'
+      events={events}
+      onSelectTime={(start: Dayjs | null, end: Dayjs | null) => {
+        setStart(start)
+        setEnd(end)
+        setCreateEventOpen(true)
+      }}
+      onSelectEvent={(event: Event | null | undefined) => {
+        setEvent(event)
+        setEditEventOpen(true)
+      }}
+    />
   ) 
 }
 ```
-
-## Contributing
-### View the example app:
-- `git clone https://github.com/richlaconte/react-date-activity-display.git`
-- `cd react-date-activity-display`
-- `cd example`
-- `npm i`
-- `npm start`
-
-### Changes should be made to the files in `/src/components`

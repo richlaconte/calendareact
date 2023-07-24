@@ -6,6 +6,8 @@ import Day from './Day'
 
 import { Day as DayType } from '../CalendarTypes'
 
+import { useCalendar } from '../../../contexts/calendarContext'
+
 type WeekProps = {
   week: DayType[]
   weekIndex: number
@@ -17,12 +19,15 @@ type WeekProps = {
 }
 
 const Week: FC<WeekProps> = ({ week, weekIndex, onMouseDown, onMouseOver, mouseDown, start, end }) => {
+  const { colors } = useCalendar()
+
   return (
     <Box
       display='flex'
       flexGrow='1'
+      height='100%'
       sx={{
-        borderTop: weekIndex === 0 ? 'none' : '1px solid black',
+        borderTop: weekIndex === 0 ? 'none' : colors.month.border,
       }}
     >
       {week.map((day, i) => {

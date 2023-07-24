@@ -1,18 +1,16 @@
-import React, { FC } from 'react'
+import React from 'react'
 import dayjs, { Dayjs } from 'dayjs'
 import { Box } from '@mui/material'
 
 import Week from './Week'
-import { Event } from '../CalendarTypes'
 
-type MonthProps = {
-  viewOffset?: number
-  events: Event[]
-  onSelectTime: (start: Dayjs | null, end: Dayjs | null) => unknown
-  onSelectEvent: (event: Event) => unknown
-}
+import { useCalendar } from '../../../contexts/calendarContext'
 
-const Month: FC<MonthProps> = ({ viewOffset, onSelectTime }) => {
+const Month = () => {
+  const { onSelectTime } = useCalendar()
+
+  const viewOffset = undefined
+
   const [mouseDown, setMouseDown] = React.useState(false)
 
   const [start, setStart] = React.useState<Dayjs | null>(null)
