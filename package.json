@@ -1,6 +1,6 @@
 {
   "name": "calendareact",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A TS calendar component built with MUI and Dayjs",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",

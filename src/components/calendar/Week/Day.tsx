@@ -121,7 +121,7 @@ const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
                 alignItems='center'
                 justifyContent='center'
                 border='1px solid black'
-                borderBottom={i === 23 ? '1px solid black' : 'none'}
+                borderBottom={'none'}
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 onMouseDown={(e: any) => {
                   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
