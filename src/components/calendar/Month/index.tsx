@@ -1,5 +1,5 @@
 import React from 'react'
-import dayjs, { Dayjs } from 'dayjs'
+import { Dayjs } from 'dayjs'
 import { Box } from '@mui/material'
 
 import Week from './Week'
@@ -7,10 +7,7 @@ import Week from './Week'
 import { useCalendar } from '../../../contexts/calendarContext'
 
 const Month = () => {
-  const { onSelectTime } = useCalendar()
-
-  const viewOffset = undefined
-
+  const { onSelectTime, monthWeeks } = useCalendar()
   const [mouseDown, setMouseDown] = React.useState(false)
 
   const [start, setStart] = React.useState<Dayjs | null>(null)
@@ -39,36 +36,6 @@ const Month = () => {
     setEnd(null)
     setMouseDown(false)
   }
-
-  const today = dayjs().add(viewOffset || 0, 'month')
-
-  const monthStart = today.startOf('month')
-  const monthEnd = today.endOf('month')
-
-  const startOffset = monthStart.day()
-  const endOffset = 7 - monthEnd.day()
-
-  const monthDisplayLength = monthEnd.diff(monthStart, 'day') + startOffset + endOffset
-
-  const monthWeeks = Array(Math.ceil(monthDisplayLength / 7))
-    .fill(0)
-    .map((_, i) => {
-      const weekStart = monthStart.add(i * 7 - startOffset, 'day')
-      const weekEnd = weekStart.add(6, 'day')
-
-      const weekLength = weekEnd.diff(weekStart, 'day') + 1
-      const weekDays = Array(weekLength)
-        .fill(0)
-        .map((_, i) => {
-          const day = weekStart.add(i, 'day')
-          return {
-            day,
-            inMonth: day.month() === today.month(),
-          }
-        })
-
-      return weekDays
-    })
 
   return (
     <Box
