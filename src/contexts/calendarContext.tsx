@@ -1,6 +1,8 @@
 import React, { FC, useContext, Context } from 'react'
 import dayjs, { Dayjs } from 'dayjs'
 import { Event, Day, Colors } from '../components/calendar/CalendarTypes'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+dayjs.extend(isSameOrBefore)
 
 import { defaultColors } from '../consts'
 
@@ -10,9 +12,12 @@ type CalendarContextType = {
   view?: 'week' | 'month' | 'small'
   colors: Colors
   events: Event[]
-  onSelectTime: (start: Dayjs | null, end: Dayjs | null) => unknown
-  onSelectEvent: (event: Event | null | undefined) => unknown
+  eventsByDay: any
+  onSelectTime?: (start: Dayjs | null, end: Dayjs | null) => unknown
+  onSelectEvent?: (event: Event | null | undefined) => unknown
+  onSelectDate?: (date: Dayjs) => unknown
   monthWeeks: Day[][]
+  selectedDate?: Dayjs
 }
 
 type CalendarContextProviderProps = {
@@ -20,8 +25,10 @@ type CalendarContextProviderProps = {
   colors?: Colors
   view?: 'week' | 'month'
   events: Event[]
-  onSelectTime: (start: Dayjs | null, end: Dayjs | null) => unknown
-  onSelectEvent: (event: Event | null | undefined) => unknown
+  onSelectTime?: (start: Dayjs | null, end: Dayjs | null) => unknown
+  onSelectEvent?: (event: Event | null | undefined) => unknown
+  onSelectDate?: (date: Dayjs) => unknown
+  selectedDate?: Dayjs
 }
 
 const CalendarContextProvider: FC<CalendarContextProviderProps> = ({
@@ -31,6 +38,8 @@ const CalendarContextProvider: FC<CalendarContextProviderProps> = ({
   events,
   onSelectTime,
   onSelectEvent,
+  onSelectDate,
+  selectedDate,
 }) => {
   const viewOffset = undefined
 
@@ -64,13 +73,56 @@ const CalendarContextProvider: FC<CalendarContextProviderProps> = ({
       return weekDays
     })
 
+  interface EventsByDay {
+    [month: string]: {
+      [day: number]: Event[]
+    }
+  }
+
+  const eventsByDay: any = events?.length
+    ? events.reduce((acc: EventsByDay, event) => {
+        const startDate = dayjs(event?.date?.start)
+        const endDate = dayjs(event?.date?.end)
+
+        // Iterate through each day between start and end dates
+        let currentDate = startDate
+        console.log('HERE !!!')
+        console.log(currentDate)
+        while (currentDate?.isSameOrBefore(endDate, 'day')) {
+          const monthName = currentDate.format('MMMM').toLowerCase()
+          const day = currentDate.date()
+
+          // Create the month key if it doesn't exist
+          if (!acc[monthName]) {
+            acc[monthName] = {}
+          }
+
+          // Create the day key if it doesn't exist
+          if (!acc[monthName][day]) {
+            acc[monthName][day] = []
+          }
+
+          // Add the event to the corresponding day array
+          acc[monthName][day].push(event)
+
+          // Move to the next day
+          currentDate = currentDate.add(1, 'day')
+        }
+
+        return acc
+      }, {})
+    : {}
+
   const value = {
     colors: colors || defaultColors,
     view,
     events,
+    eventsByDay,
     onSelectTime,
     onSelectEvent,
+    onSelectDate,
     monthWeeks,
+    selectedDate,
   }
 
   return <Context.Provider value={value}>{children}</Context.Provider>

@@ -26,7 +26,7 @@ const Month = () => {
   const onMouseUp = () => {
     if (start === null && end === null) return
     setMouseDown(false)
-    onSelectTime(start, end)
+    onSelectTime && onSelectTime(start, end)
     setStart(null)
     setEnd(null)
   }

@@ -32,4 +32,29 @@ export const defaultColors: Colors = {
       event: '#ffffff',
     },
   },
+  small: {
+    selected: {
+      background: '#D6D6D6',
+      text: '#ffffff',
+      dots: '#ffffff',
+      hover: {
+        background: '#e0e0e0',
+      },
+    },
+    unselected: {
+      background: null,
+      text: '#FFFFFF',
+      dots: '#D6D6D6',
+      hover: {
+        background: '#e0e0e0',
+      },
+    },
+    notInMonth: {
+      background: '#e0e0e0',
+      text: '#71717A',
+      hover: {
+        background: '#e0e0e0',
+      },
+    },
+  },
 }

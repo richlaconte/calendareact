@@ -14,7 +14,7 @@ const Event: FC<{ event: Event; color?: string }> = ({ event, color }) => {
       <Paper
         sx={{ backgroundColor: color || defaultColors.month.background.thisMonth.event, cursor: 'pointer' }}
         className='event'
-        onClick={() => onSelectEvent(event)}
+        onClick={() => onSelectEvent && onSelectEvent(event)}
       >
         <Box px={1}>
           <Typography sx={{ userSelect: 'none', color: defaultColors.month.text.event }} className='event'>

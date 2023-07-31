@@ -2,8 +2,12 @@ import { Dayjs } from 'dayjs'
 
 export type Event = {
   id: string
-  start: Dayjs
-  end: Dayjs
+  start?: Dayjs
+  end?: Dayjs
+  date?: {
+    start?: Dayjs
+    end?: Dayjs
+  }
   title: string
 }
 
@@ -42,6 +46,31 @@ export type Colors = {
     border: string
     text: {
       event: string
+    }
+  }
+  small: {
+    selected: {
+      background: string | null
+      text: string
+      dots: string
+      hover: {
+        background: string | null
+      }
+    }
+    unselected: {
+      background: string | null
+      text: string
+      dots: string
+      hover: {
+        background: string | null
+      }
+    }
+    notInMonth: {
+      background: string
+      text: string
+      hover: {
+        background: string
+      }
     }
   }
 }

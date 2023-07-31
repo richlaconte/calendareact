@@ -11,27 +11,50 @@ import Small from './Small'
 type CalendarProps = {
   view?: 'week' | 'month'
   events: Event[]
-  onSelectTime: (start: Dayjs | null, end: Dayjs | null) => unknown
-  onSelectEvent: (event: Event | null | undefined) => unknown
+  onSelectTime?: (start: Dayjs | null, end: Dayjs | null) => unknown
+  onSelectEvent?: (event: Event | null | undefined) => unknown
+  onSelectDate?: (date: Dayjs) => unknown
+  selectedDate?: Dayjs
 }
 
-const Calendar: FC<CalendarProps> = ({ view, events, onSelectTime, onSelectEvent }) => {
+const Calendar: FC<CalendarProps> = ({ view, events, onSelectTime, onSelectEvent, selectedDate, onSelectDate }) => {
   if (view === 'week')
     return (
-      <CalendarContextProvider view={view} events={events} onSelectTime={onSelectTime} onSelectEvent={onSelectEvent}>
+      <CalendarContextProvider
+        view={view}
+        events={events}
+        onSelectTime={onSelectTime}
+        onSelectEvent={onSelectEvent}
+        selectedDate={selectedDate}
+        onSelectDate={onSelectDate}
+      >
         <Week />
       </CalendarContextProvider>
     )
 
   if (view === 'month')
     return (
-      <CalendarContextProvider view={view} events={events} onSelectTime={onSelectTime} onSelectEvent={onSelectEvent}>
+      <CalendarContextProvider
+        view={view}
+        events={events}
+        onSelectTime={onSelectTime}
+        onSelectEvent={onSelectEvent}
+        selectedDate={selectedDate}
+        onSelectDate={onSelectDate}
+      >
         <Month />
       </CalendarContextProvider>
     )
 
   return (
-    <CalendarContextProvider view={view} events={events} onSelectTime={onSelectTime} onSelectEvent={onSelectEvent}>
+    <CalendarContextProvider
+      view={view}
+      events={events}
+      onSelectTime={onSelectTime}
+      onSelectEvent={onSelectEvent}
+      selectedDate={selectedDate}
+      onSelectDate={onSelectDate}
+    >
       <Small />
     </CalendarContextProvider>
   )

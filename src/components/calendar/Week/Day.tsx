@@ -12,12 +12,12 @@ import { useCalendar } from '../../../contexts/calendarContext'
 
 type DayProps = {
   day: Dayjs
-  onSelectTime: (start: Dayjs, end: Dayjs) => unknown
-  onSelectEvent: (event: Event | undefined) => unknown
+  onSelectTime?: (start: Dayjs, end: Dayjs) => unknown
+  onSelectEvent?: (event: Event | undefined) => unknown
 }
 
 const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
-  const { events } = useCalendar()
+  const { events, selectedDate } = useCalendar()
   const [mouseDown, setMouseDown] = React.useState(false)
 
   const [start, setStart] = React.useState<{ day: null | Dayjs; hour: number }>({ day: null, hour: 0 })
@@ -27,17 +27,16 @@ const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
   })
 
   const dayOfWeek = day.format('ddd')
-  const dayOfWeekNumber = day.day()
 
   const isToday = day.isSame(dayjs(), 'day')
+  const isSelectedDate = selectedDate?.isSame(day, 'day')
 
   const onMouseUp = () => {
     if (start.day === null && end.day === null) return
     setMouseDown(false)
-    console.log(start, end)
     const newStart = dayjs(start.day).hour(start.hour)
     const newEnd = dayjs(end.day).hour(end.hour)
-    onSelectTime(newStart, newEnd)
+    onSelectTime && onSelectTime(newStart, newEnd)
     setStart({ day: null, hour: 0 })
     setEnd({ day: null, hour: 0 })
   }
@@ -68,20 +67,13 @@ const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
       display='flex'
       flexGrow='1'
       width='0'
+      maxWidth='500px'
       flexDirection='column'
       alignItems='center'
       justifyContent='center'
       onMouseLeave={onMouseLeave}
       onMouseUp={onMouseUp}
     >
-      <Box>
-        <Box>
-          <Typography sx={{ userSelect: 'none' }}>{dayOfWeek}</Typography>
-        </Box>
-        <Box>
-          <Typography sx={{ userSelect: 'none' }}>{day.format('MMMM DD')}</Typography>
-        </Box>
-      </Box>
       <Box
         display='flex'
         flexGrow='1'
@@ -120,14 +112,13 @@ const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
                 display='flex'
                 alignItems='center'
                 justifyContent='center'
-                border='1px solid black'
                 borderBottom={'none'}
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 onMouseDown={(e: any) => {
                   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
                   const isEvent = e?.target?.classList?.contains('event')
                   const isEventTitle = !isEvent && e?.target?.classList?.contains('eventTitle')
-                  if (isEvent || isEventTitle) return onSelectEvent(event)
+                  if (isEvent || isEventTitle) return onSelectEvent && onSelectEvent(event)
                   setMouseDown(true)
                   setStart({ day, hour: i })
                   setEnd({ day, hour: i + 1 })
@@ -136,7 +127,7 @@ const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
                 sx={{
                   backgroundColor:
                     start.hour === i && start?.day !== null && start?.day.format('ddd') === dayOfWeek
-                      ? 'lightgrey'
+                      ? '#D6D6D6'
                       : mouseDown &&
                         start.day !== null &&
                         start?.day.format('ddd') === dayOfWeek &&
@@ -144,14 +135,13 @@ const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
                         end.day !== null &&
                         end?.day.format('ddd') === dayOfWeek &&
                         end.hour > i
-                      ? 'lightgrey'
+                      ? '#D6D6D6'
                       : isToday
                       ? '#eaf6ff'
+                      : isSelectedDate
+                      ? '#F0F1F2'
                       : 'white',
-                  width: dayOfWeekNumber === 6 ? 'calc(100% - 1px)' : '100%',
-                  minWidth: '145px',
-                  borderLeft: dayOfWeekNumber === 0 ? 'none' : '1px solid black',
-                  borderRight: dayOfWeekNumber === 6 ? 'none' : '1px solid black',
+                  boxShadow: '-1px -1px 0px 0px #D6D6D6 inset;',
                   cursor: mouseDown ? 'move' : 'default',
                 }}
               >
@@ -172,11 +162,11 @@ const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
                   <div
                     className='event'
                     style={{
-                      marginTop: isStart ? '10px' : '0px',
-                      marginBottom: isEnd ? '10px' : '0px',
+                      marginTop: isStart ? '6px' : '0px',
+                      marginBottom: isEnd ? '6px' : '0px',
                       zIndex: 1,
-                      marginLeft: '10px',
-                      marginRight: '10px',
+                      marginLeft: '6px',
+                      marginRight: '6px',
                       backgroundColor: '#3498DB',
                       height: 'calc(100% + 1px)',
                       width: '100%',
@@ -198,8 +188,8 @@ const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
                             left: '0',
                             right: '0',
                             top: '0',
-                            marginTop: '10px',
-                            marginLeft: '10px',
+                            marginTop: '6px',
+                            marginLeft: '6px',
                           }}
                           variant='caption'
                         >

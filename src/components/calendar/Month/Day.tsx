@@ -61,7 +61,6 @@ const Day: FC<
         borderLeft: dayInWeekIndex === 0 ? 'none' : colors.month.border,
       }}
       onMouseDown={(e: any) => {
-        console.log(e.target.classList)
         if (!inMonth || e?.target?.classList?.contains('event')) return
 
         onMouseDown(day)
