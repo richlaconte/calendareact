@@ -24,8 +24,7 @@ const Week = () => {
 
   useEffect(() => {
     const scroll = document.getElementById('scroll')
-    console.log(scroll?.scrollHeight)
-    scroll?.scrollTo(0, scroll.scrollHeight / 3)
+    scroll?.scrollTo(0, scroll?.scrollHeight / 3)
   }, [])
 
   return (
