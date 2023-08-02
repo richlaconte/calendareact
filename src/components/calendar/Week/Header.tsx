@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { Box, Typography } from '@mui/material'
 
 const Header: FC<{ weekDays: any }> = ({ weekDays }) => (
-  <Box display='flex' maxHeight='72px' flexGrow={1}>
+  <Box display='flex' maxHeight='72px' flexGrow={1} sx={{ overflowY: 'scroll' }}>
     <Box maxWidth='48px' flexGrow={1} />
     {weekDays.map((day: any) => (
       <Box

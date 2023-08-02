@@ -7,13 +7,15 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 dayjs.extend(isSameOrAfter)
 dayjs.extend(isSameOrBefore)
 
-import { Event } from '../CalendarTypes'
+import { Event as EventType } from '../CalendarTypes'
 import { useCalendar } from '../../../contexts/calendarContext'
+
+import Event from './Event'
 
 type DayProps = {
   day: Dayjs
   onSelectTime?: (start: Dayjs, end: Dayjs) => unknown
-  onSelectEvent?: (event: Event | undefined) => unknown
+  onSelectEvent?: (event: EventType | undefined) => unknown
 }
 
 const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
@@ -90,7 +92,7 @@ const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
             let isEnd = false
 
             // see if there is an event that overlaps this hour
-            const event: Event | undefined = events.find((event: Event) => {
+            const event: EventType | undefined = events.find((event: EventType) => {
               const eventStart = dayjs(event.start)
               const eventEnd = dayjs(event.end)
               const start = dayjs(day).hour(i)
@@ -115,6 +117,7 @@ const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
                 borderBottom={'none'}
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 onMouseDown={(e: any) => {
+                  if (event) return
                   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
                   const isEvent = e?.target?.classList?.contains('event')
                   const isEventTitle = !isEvent && e?.target?.classList?.contains('eventTitle')
@@ -158,47 +161,7 @@ const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
                     </Typography>
                   </>
                 )}
-                {event && (
-                  <div
-                    className='event'
-                    style={{
-                      marginTop: isStart ? '6px' : '0px',
-                      marginBottom: isEnd ? '6px' : '0px',
-                      zIndex: 1,
-                      marginLeft: '6px',
-                      marginRight: '6px',
-                      backgroundColor: '#3498DB',
-                      height: 'calc(100% + 1px)',
-                      width: '100%',
-                      borderTopRightRadius: isStart ? '5px' : '0px',
-                      borderTopLeftRadius: isStart ? '5px' : '0px',
-                      borderBottomRightRadius: isEnd ? '5px' : '0px',
-                      borderBottomLeftRadius: isEnd ? '5px' : '0px',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    {isStart && (
-                      <Box maxWidth='100%' position='relative'>
-                        <Typography
-                          className='eventTitle'
-                          sx={{
-                            userSelect: 'none',
-                            width: 'calc(100% - 20px)',
-                            position: 'absolute',
-                            left: '0',
-                            right: '0',
-                            top: '0',
-                            marginTop: '6px',
-                            marginLeft: '6px',
-                          }}
-                          variant='caption'
-                        >
-                          {event.title}
-                        </Typography>
-                      </Box>
-                    )}
-                  </div>
-                )}
+                {event && <Event event={event} isStart={isStart} isEnd={isEnd} i={i} />}
               </Box>
             )
           })}

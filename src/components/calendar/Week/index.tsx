@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import dayjs, { Dayjs } from 'dayjs'
 import { Box, Typography } from '@mui/material'
 
@@ -22,11 +22,17 @@ const Week = () => {
       return weekStart.add(i, 'day')
     })
 
+  useEffect(() => {
+    const scroll = document.getElementById('scroll')
+    console.log(scroll?.scrollHeight)
+    scroll?.scrollTo(0, scroll.scrollHeight / 3)
+  }, [])
+
   return (
     <Box display='flex' flexDirection='column' height='100%' width='0px' flexGrow='1'>
       <Header weekDays={weekDays} />
       <Box display='flex' height='0' flexGrow={1}>
-        <Box height='100%' width='100%' display='flex' flexDirection='column' overflow='auto'>
+        <Box height='100%' width='100%' display='flex' flexDirection='column' overflow='auto' id='scroll'>
           <Box display='flex' width='100%'>
             <Box width='48px'>
               {Array(24)

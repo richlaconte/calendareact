@@ -18,6 +18,10 @@ type CalendarContextType = {
   onSelectDate?: (date: Dayjs) => unknown
   monthWeeks: Day[][]
   selectedDate?: Dayjs
+  onEditEvent?: (event: Event) => unknown
+  onDeleteEvent?: (event: Event) => unknown
+  onApproveEvent?: (event: Event) => unknown
+  showApprove?: boolean
 }
 
 type CalendarContextProviderProps = {
@@ -29,6 +33,10 @@ type CalendarContextProviderProps = {
   onSelectEvent?: (event: Event | null | undefined) => unknown
   onSelectDate?: (date: Dayjs) => unknown
   selectedDate?: Dayjs
+  onEditEvent?: (event: Event) => unknown
+  onDeleteEvent?: (event: Event) => unknown
+  onApproveEvent?: (event: Event) => unknown
+  showApprove?: boolean
 }
 
 const CalendarContextProvider: FC<CalendarContextProviderProps> = ({
@@ -40,6 +48,10 @@ const CalendarContextProvider: FC<CalendarContextProviderProps> = ({
   onSelectEvent,
   onSelectDate,
   selectedDate,
+  onEditEvent,
+  onDeleteEvent,
+  onApproveEvent,
+  showApprove,
 }) => {
   const viewOffset = undefined
 
@@ -123,6 +135,10 @@ const CalendarContextProvider: FC<CalendarContextProviderProps> = ({
     onSelectDate,
     monthWeeks,
     selectedDate,
+    onEditEvent,
+    onDeleteEvent,
+    onApproveEvent,
+    showApprove,
   }
 
   return <Context.Provider value={value}>{children}</Context.Provider>

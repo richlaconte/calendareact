@@ -15,9 +15,24 @@ type CalendarProps = {
   onSelectEvent?: (event: Event | null | undefined) => unknown
   onSelectDate?: (date: Dayjs) => unknown
   selectedDate?: Dayjs
+  onEditEvent?: (event: Event) => unknown
+  onDeleteEvent?: (event: Event) => unknown
+  onApproveEvent?: (event: Event) => unknown
+  showApprove?: boolean
 }
 
-const Calendar: FC<CalendarProps> = ({ view, events, onSelectTime, onSelectEvent, selectedDate, onSelectDate }) => {
+const Calendar: FC<CalendarProps> = ({
+  view,
+  events,
+  onSelectTime,
+  onSelectEvent,
+  selectedDate,
+  onSelectDate,
+  onEditEvent,
+  onDeleteEvent,
+  onApproveEvent,
+  showApprove,
+}) => {
   if (view === 'week')
     return (
       <CalendarContextProvider
@@ -27,6 +42,10 @@ const Calendar: FC<CalendarProps> = ({ view, events, onSelectTime, onSelectEvent
         onSelectEvent={onSelectEvent}
         selectedDate={selectedDate}
         onSelectDate={onSelectDate}
+        onEditEvent={onEditEvent}
+        onDeleteEvent={onDeleteEvent}
+        onApproveEvent={onApproveEvent}
+        showApprove={showApprove}
       >
         <Week />
       </CalendarContextProvider>
@@ -41,6 +60,10 @@ const Calendar: FC<CalendarProps> = ({ view, events, onSelectTime, onSelectEvent
         onSelectEvent={onSelectEvent}
         selectedDate={selectedDate}
         onSelectDate={onSelectDate}
+        onEditEvent={onEditEvent}
+        onDeleteEvent={onDeleteEvent}
+        onApproveEvent={onApproveEvent}
+        showApprove={showApprove}
       >
         <Month />
       </CalendarContextProvider>
@@ -54,6 +77,10 @@ const Calendar: FC<CalendarProps> = ({ view, events, onSelectTime, onSelectEvent
       onSelectEvent={onSelectEvent}
       selectedDate={selectedDate}
       onSelectDate={onSelectDate}
+      onEditEvent={onEditEvent}
+      onDeleteEvent={onDeleteEvent}
+      onApproveEvent={onApproveEvent}
+      showApprove={showApprove}
     >
       <Small />
     </CalendarContextProvider>
