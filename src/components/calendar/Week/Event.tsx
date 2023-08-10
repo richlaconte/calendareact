@@ -20,6 +20,17 @@ const Event: FC<{ event: any; isStart: boolean; isEnd: boolean; i: any }> = ({ e
     setAnchorEl(null)
   }
 
+  const handleEdit = () => {
+    onSelectEvent && onSelectEvent(event)
+    onSelectEvent && handleClose()
+  }
+
+  /*
+  const handleDelete = () => {
+
+  }
+  */
+
   const open = Boolean(anchorEl)
   const id = open ? i : undefined
 
@@ -95,7 +106,7 @@ const Event: FC<{ event: any; isStart: boolean; isEnd: boolean; i: any }> = ({ e
               alignItems='center'
               justifyContent='center'
               mr={1}
-              onClick={() => onSelectEvent && onSelectEvent(event)}
+              onClick={handleEdit}
               sx={{
                 cursor: onSelectEvent ? 'pointer' : 'default',
               }}
