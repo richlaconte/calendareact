@@ -34,16 +34,16 @@ export const defaultColors: Colors = {
   },
   small: {
     selected: {
-      background: '#D6D6D6',
+      background: '#538EF5',
       text: '#ffffff',
       dots: '#ffffff',
       hover: {
-        background: '#e0e0e0',
+        background: '#347af3',
       },
     },
     unselected: {
       background: null,
-      text: '#FFFFFF',
+      text: '#575D67',
       dots: '#D6D6D6',
       hover: {
         background: '#e0e0e0',

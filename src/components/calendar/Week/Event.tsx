@@ -28,13 +28,13 @@ const Event: FC<{ event: any; isStart: boolean; isEnd: boolean; i: any }> = ({ e
       <div
         className='event'
         style={{
-          marginTop: isStart ? '6px' : '0px',
-          marginBottom: isEnd ? '6px' : '0px',
+          marginTop: isStart ? '3px' : '0px',
+          marginBottom: isEnd ? '3px' : '0px',
           zIndex: 1,
           marginLeft: '4px',
           marginRight: '4px',
           backgroundColor: '#D6D6D6',
-          height: 'calc(100% + 1px)',
+          height: `calc(100% + ${(isStart ? -3 : 0) + (isEnd ? -3 : 0)}px)`,
           width: '100%',
           borderLeft: '5px solid #333333',
           borderTopRightRadius: isStart ? '5px' : '0px',

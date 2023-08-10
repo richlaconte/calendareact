@@ -1,14 +1,27 @@
 import React, { FC } from 'react'
-import { Box, IconButton, Typography } from '@mui/material'
+import { Box, IconButton, IconButtonProps, Typography } from '@mui/material'
+import { styled } from '@mui/system'
 import { Day } from '../CalendarTypes'
 import { useCalendar } from '../../../contexts/calendarContext'
+
+interface StyledIconButtonProps extends IconButtonProps {
+  isSelected?: boolean
+  colors: any
+}
+
+const StyledIconButton = styled(IconButton)<StyledIconButtonProps>(({ isSelected, colors }) => ({
+  width: '100%',
+  height: '100%',
+  backgroundColor: isSelected ? colors.small.selected.background : null,
+  '&:hover': {
+    backgroundColor: isSelected ? '#0e5de8' : null,
+  },
+}))
 
 const Day: FC<any> = ({ day, key }) => {
   const { colors, selectedDate, eventsByDay, onSelectDate } = useCalendar()
 
   const isSelected = day.day.isSame(selectedDate, 'day')
-
-  console.log(selectedDate)
 
   const monthName = day.day.format('MMMM').toLowerCase()
   const dayNumber = day.day.format('D')
@@ -18,15 +31,22 @@ const Day: FC<any> = ({ day, key }) => {
   return (
     <Box key={key} display='flex' flexGrow={1} width='100%' textAlign='center' justifyContent='center'>
       <Box width='35px'>
-        <IconButton
-          sx={{ width: '100%', height: '100%', backgroundColor: isSelected ? colors.small.selected.background : null }}
+        <StyledIconButton
           size='small'
           onClick={() => onSelectDate && onSelectDate(day.day)}
+          isSelected={isSelected}
+          colors={colors}
         >
           <Box display='flex' flexDirection='column'>
             <Box>
               <Typography
-                color={day.inMonth ? colors.small.unselected.text : colors.small.notInMonth.text}
+                color={
+                  day.inMonth
+                    ? isSelected
+                      ? colors.small.selected.text
+                      : colors.small.unselected.text
+                    : colors.small.notInMonth.text
+                }
                 fontSize='13.2px'
                 fontWeight='600'
               >
@@ -87,7 +107,7 @@ const Day: FC<any> = ({ day, key }) => {
               )}
             </Box>
           </Box>
-        </IconButton>
+        </StyledIconButton>
       </Box>
     </Box>
   )

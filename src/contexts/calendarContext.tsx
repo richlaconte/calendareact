@@ -93,13 +93,12 @@ const CalendarContextProvider: FC<CalendarContextProviderProps> = ({
 
   const eventsByDay: any = events?.length
     ? events.reduce((acc: EventsByDay, event) => {
-        const startDate = dayjs(event?.date?.start)
-        const endDate = dayjs(event?.date?.end)
+        const startDate = dayjs(event?.start)
+        const endDate = dayjs(event?.end)
 
         // Iterate through each day between start and end dates
         let currentDate = startDate
-        console.log('HERE !!!')
-        console.log(currentDate)
+
         while (currentDate?.isSameOrBefore(endDate, 'day')) {
           const monthName = currentDate.format('MMMM').toLowerCase()
           const day = currentDate.date()
