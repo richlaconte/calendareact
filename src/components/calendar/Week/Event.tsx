@@ -98,8 +98,7 @@ const Event: FC<{ event: any; isStart: boolean; isEnd: boolean; i: any }> = ({ e
             <Box
               width='32px'
               height='32px'
-              border={`1px solid ${onSelectEvent ? '#858585' : '#EFEFEF'}`}
-              bgcolor={onSelectEvent ? '#858585' : '#EFEFEF'}
+              border={`1px solid #B8B8B8`}
               borderRadius='6px'
               display='flex'
               alignItems='center'
@@ -110,12 +109,12 @@ const Event: FC<{ event: any; isStart: boolean; isEnd: boolean; i: any }> = ({ e
                 cursor: onSelectEvent ? 'pointer' : 'default',
               }}
             >
-              <EditIcon sx={{ color: onSelectEvent ? 'white' : '#B8B8B8' }} />
+              <EditIcon sx={{ color: '#B8B8B8' }} />
             </Box>
             <Box
               width='32px'
               height='32px'
-              border={`1px solid ${onDeleteEvent ? '#858585' : '#EFEFEF'}`}
+              border={`1px solid #B8B8B8`}
               borderRadius='6px'
               display='flex'
               alignItems='center'
