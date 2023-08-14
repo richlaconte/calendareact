@@ -22,6 +22,7 @@ const Day: FC<any> = ({ day, key }) => {
   const { colors, selectedDate, eventsByDay, onSelectDate } = useCalendar()
 
   const isSelected = day.day.isSame(selectedDate, 'day')
+  const isToday = day.day.isSame(new Date(), 'day')
 
   const monthName = day.day.format('MMMM').toLowerCase()
   const dayNumber = day.day.format('D')
@@ -30,12 +31,15 @@ const Day: FC<any> = ({ day, key }) => {
 
   return (
     <Box key={key} display='flex' flexGrow={1} width='100%' textAlign='center' justifyContent='center'>
-      <Box width='35px'>
+      <Box width='36.8px'>
         <StyledIconButton
           size='small'
           onClick={() => onSelectDate && onSelectDate(day.day)}
           isSelected={isSelected}
           colors={colors}
+          sx={{
+            border: isToday ? '1px solid #575D67' : null,
+          }}
         >
           <Box display='flex' flexDirection='column' justifyContent='center'>
             <Box>

@@ -14,7 +14,7 @@ const Small = () => {
       <Box display='flex' mb={1}>
         {days.map((day, i) => (
           <Box key={i} display='flex' flexGrow={1} width='100%' textAlign='center' justifyContent='center'>
-            <Box width='35px'>
+            <Box width='36.8px'>
               <Typography color='#71717A' fontSize='12px' fontWeight='600' lineHeight='19.2px'>
                 {day}
               </Typography>
