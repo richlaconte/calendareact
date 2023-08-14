@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import { Box, Popover, Typography } from '@mui/material'
+import { Box, Button, Popover, Typography } from '@mui/material'
 
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
@@ -95,38 +95,23 @@ const Event: FC<{ event: any; isStart: boolean; isEnd: boolean; i: any }> = ({ e
             <Typography>Lorem ipsum dolor sit amet consectetur. Est consectetur id ac vitae iaculis enim.</Typography>
           </Box>
           <Box display='flex' justifyContent='flex-end'>
-            <Box
-              width='32px'
-              height='32px'
-              border={`1px solid #B8B8B8`}
-              borderRadius='6px'
-              display='flex'
-              alignItems='center'
-              justifyContent='center'
-              mr={1}
+            <Button
               onClick={handleEdit}
-              sx={{
-                cursor: onSelectEvent ? 'pointer' : 'default',
-              }}
+              variant='outlined'
+              size='small'
+              sx={{ minWidth: '32px', width: '32px', height: '32px', padding: '0px', marginRight: '8px' }}
             >
-              <EditIcon sx={{ color: '#B8B8B8' }} />
-            </Box>
-            <Box
-              width='32px'
-              height='32px'
-              border={`1px solid #B8B8B8`}
-              borderRadius='6px'
-              display='flex'
-              alignItems='center'
-              justifyContent='center'
-              mr={1}
+              <EditIcon />
+            </Button>
+            <Button
               onClick={handleDelete}
-              sx={{
-                cursor: onDeleteEvent ? 'pointer' : 'default',
-              }}
+              variant='outlined'
+              size='small'
+              color='error'
+              sx={{ minWidth: '32px', width: '32px', height: '32px', padding: '0px' }}
             >
-              <DeleteOutlineIcon sx={{ color: '#B8B8B8' }} />
-            </Box>
+              <DeleteOutlineIcon />
+            </Button>
             {showApprove && (
               <Box
                 width='32px'
