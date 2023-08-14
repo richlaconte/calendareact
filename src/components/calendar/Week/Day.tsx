@@ -19,10 +19,13 @@ type DayProps = {
 }
 
 const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
-  const { events, selectedDate } = useCalendar()
+  const { eventsByDay, selectedDate } = useCalendar()
   const [mouseDown, setMouseDown] = React.useState(false)
 
-  const [start, setStart] = React.useState<{ day: null | Dayjs; hour: number }>({ day: null, hour: 0 })
+  const [start, setStart] = React.useState<{ day: null | Dayjs; hour: number }>({
+    day: null,
+    hour: 0,
+  })
   const [end, setEnd] = React.useState<{ day: null | Dayjs; hour: number }>({
     day: null,
     hour: 0,
@@ -52,17 +55,30 @@ const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
 
   const startTimeDisplay = {
     hour: (function () {
-      if (start.hour === 0) return 12
-      if (start.hour > 12) return start.hour - 12
-      return start.hour
+      const hour = Math.floor(start.hour / 2)
+      if (hour === 0) return 12
+      if (hour > 12) return hour - 12
+      return hour
     })(),
-    ampm: start.hour < 12 ? 'AM' : 'PM',
+    minute: start.hour % 2 === 0 ? '00' : '30',
+    ampm: start.hour / 2 < 12 ? 'AM' : 'PM',
   }
 
   const endTimeDisplay = {
-    hour: end.hour > 12 ? end.hour - 12 : end.hour,
-    ampm: end.hour < 12 || end.hour === 24 ? 'AM' : 'PM',
+    hour: (function () {
+      const hour = Math.floor(end.hour / 2)
+      if (hour > 12) return hour - 12
+      return hour
+    })(),
+    minute: end.hour % 2 === 0 ? '00' : '30',
+    ampm: end.hour / 2 < 12 || end.hour === 48 ? 'AM' : 'PM',
   }
+
+  const monthName = day.format('MMMM').toLowerCase()
+  const month = monthName in eventsByDay ? eventsByDay[monthName] : {}
+  const dayOfMonth = day.format('D')
+
+  const events = dayOfMonth in month ? month[dayOfMonth] : []
 
   return (
     <Box
@@ -85,24 +101,29 @@ const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
           backgroundColor: day.format('YYYY-MM-DD') === dayjs().format('YYY') ? 'lightblue' : 'none',
         }}
       >
-        {Array(24)
+        {Array(48)
           .fill(0)
           .map((_, i) => {
             let isStart = false
             let isEnd = false
 
-            // see if there is an event that overlaps this hour
+            // see if there is an event that overlaps this half hour
             const event: EventType | undefined = events.find((event: EventType) => {
               const eventStart = dayjs(event.start)
               const eventEnd = dayjs(event.end)
-              const start = dayjs(day).hour(i)
-              const end = dayjs(day).hour(i + 1)
+              const slotStart =
+                i % 2 !== 0
+                  ? dayjs(day)
+                      .hour(Math.floor(i / 2))
+                      ?.add(30, 'minute')
+                  : dayjs(day).hour(Math.floor(i / 2))
+              const slotEnd = dayjs(slotStart).add(30, 'minute')
 
               const isBetween: boolean =
-                start.isSameOrAfter(eventStart) && start.isBefore(eventEnd) && end.isSameOrBefore(eventEnd)
+                slotStart.isSameOrAfter(eventStart) && slotStart.isBefore(eventEnd) && slotEnd.isSameOrBefore(eventEnd)
 
-              isStart = start.isSame(eventStart)
-              isEnd = end.isSame(eventEnd)
+              isStart = slotStart.isSame(eventStart, 'hour') && slotStart.isSame(eventStart, 'minute')
+              isEnd = slotEnd.isSame(eventEnd, 'hour') && slotEnd.isSame(eventEnd, 'minute')
 
               return isBetween || isStart || isEnd
             })
@@ -114,7 +135,7 @@ const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
                 display='flex'
                 alignItems='center'
                 justifyContent='center'
-                borderBottom={'none'}
+                borderBottom='none'
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 onMouseDown={(e: any) => {
                   if (event) return
@@ -151,13 +172,13 @@ const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
                 {start.day !== null && i === start.hour && (
                   <>
                     <Typography sx={{ userSelect: 'none' }} variant='caption'>
-                      {startTimeDisplay.hour}:00 {startTimeDisplay.ampm}
+                      {startTimeDisplay.hour}:{startTimeDisplay.minute} {startTimeDisplay.ampm}
                     </Typography>
                     <Typography sx={{ userSelect: 'none' }} variant='caption'>
                       -
                     </Typography>
                     <Typography sx={{ userSelect: 'none' }} variant='caption'>
-                      {endTimeDisplay.hour}:00 {endTimeDisplay.ampm}
+                      {endTimeDisplay.hour}:{endTimeDisplay.minute} {endTimeDisplay.ampm}
                     </Typography>
                   </>
                 )}

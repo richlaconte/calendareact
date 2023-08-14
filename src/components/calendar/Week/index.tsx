@@ -28,7 +28,7 @@ const Week = () => {
   }, [])
 
   return (
-    <Box display='flex' flexDirection='column' height='100%' width='0px' flexGrow='1'>
+    <Box display='flex' flexDirection='column' height='100%' width='0px' flexGrow='1' pt={2}>
       <Header weekDays={weekDays} />
       <Box display='flex' height='0' flexGrow={1}>
         <Box height='100%' width='100%' display='flex' flexDirection='column' overflow='auto' id='scroll'>
@@ -38,8 +38,23 @@ const Week = () => {
                 .fill(0)
                 .map((_, i) => {
                   return (
-                    <Box key={i} width='100%' height='72px' display='flex' alignItems='center' justifyContent='center'>
-                      <Typography>{dayjs().hour(i).format('ha')}</Typography>
+                    <Box
+                      key={i}
+                      width='100%'
+                      height='72px'
+                      display='flex'
+                      alignItems='flex-start'
+                      justifyContent='center'
+                    >
+                      {i === 0 ? (
+                        <></>
+                      ) : (
+                        <Typography
+                          sx={{ marginTop: '-10px', fontSize: '12px', color: '#989FAC', textTransform: 'uppercase' }}
+                        >
+                          {dayjs().hour(i).format('h a')}
+                        </Typography>
+                      )}
                     </Box>
                   )
                 })}
