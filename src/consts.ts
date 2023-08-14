@@ -51,7 +51,7 @@ export const defaultColors: Colors = {
     },
     notInMonth: {
       background: '#e0e0e0',
-      text: '#71717A',
+      text: '#CAD0DB',
       hover: {
         background: '#e0e0e0',
       },

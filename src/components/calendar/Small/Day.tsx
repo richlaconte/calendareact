@@ -37,7 +37,7 @@ const Day: FC<any> = ({ day, key }) => {
           isSelected={isSelected}
           colors={colors}
         >
-          <Box display='flex' flexDirection='column'>
+          <Box display='flex' flexDirection='column' justifyContent='center'>
             <Box>
               <Typography
                 color={
@@ -53,16 +53,9 @@ const Day: FC<any> = ({ day, key }) => {
                 {day.day.format('D')}
               </Typography>
             </Box>
-            <Box display='flex' height='5px'>
+            <Box display='flex' height='5px' justifyContent='center'>
               {day.inMonth && events.length >= 1 && (
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='6'
-                  height='5'
-                  viewBox='0 0 6 5'
-                  fill='none'
-                  style={{ display: 'block' }}
-                >
+                <svg xmlns='http://www.w3.org/2000/svg' width='6' height='5' viewBox='0 0 6 5' fill='none'>
                   <circle
                     cx='2.7429'
                     cy='2.4'
@@ -72,14 +65,7 @@ const Day: FC<any> = ({ day, key }) => {
                 </svg>
               )}
               {day.inMonth && events.length >= 2 && (
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='6'
-                  height='5'
-                  viewBox='0 0 6 5'
-                  fill='none'
-                  style={{ display: 'block' }}
-                >
+                <svg xmlns='http://www.w3.org/2000/svg' width='6' height='5' viewBox='0 0 6 5' fill='none'>
                   <circle
                     cx='2.7429'
                     cy='2.4'
@@ -89,14 +75,7 @@ const Day: FC<any> = ({ day, key }) => {
                 </svg>
               )}
               {day.inMonth && events.length >= 3 && (
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='6'
-                  height='5'
-                  viewBox='0 0 6 5'
-                  fill='none'
-                  style={{ display: 'block' }}
-                >
+                <svg xmlns='http://www.w3.org/2000/svg' width='6' height='5' viewBox='0 0 6 5' fill='none'>
                   <circle
                     cx='2.7429'
                     cy='2.4'

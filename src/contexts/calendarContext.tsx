@@ -55,10 +55,10 @@ const CalendarContextProvider: FC<CalendarContextProviderProps> = ({
 }) => {
   const viewOffset = undefined
 
-  const today = dayjs().add(viewOffset || 0, 'month')
+  const date = selectedDate || dayjs().add(viewOffset || 0, 'month')
 
-  const monthStart = today.startOf('month')
-  const monthEnd = today.endOf('month')
+  const monthStart = date.startOf('month')
+  const monthEnd = date.endOf('month')
 
   const startOffset = monthStart.day()
   const endOffset = 7 - monthEnd.day()
@@ -78,7 +78,7 @@ const CalendarContextProvider: FC<CalendarContextProviderProps> = ({
           const day = weekStart.add(i, 'day')
           return {
             day,
-            inMonth: day.month() === today.month(),
+            inMonth: day.month() === date.month(),
           }
         })
 
