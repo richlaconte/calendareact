@@ -19,7 +19,7 @@ type DayProps = {
 }
 
 const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
-  const { eventsByDay, selectedDate, errors } = useCalendar()
+  const { eventsByDay, selectedDate } = useCalendar()
   const [mouseDown, setMouseDown] = React.useState(false)
 
   const [start, setStart] = React.useState<{ day: null | Dayjs; hour: number }>({
