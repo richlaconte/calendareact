@@ -19,6 +19,7 @@ type CalendarProps = {
   onDeleteEvent?: (event: Event) => unknown
   onApproveEvent?: (event: Event) => unknown
   showApprove?: boolean
+  errors?: any
 }
 
 const Calendar: FC<CalendarProps> = ({
@@ -32,6 +33,7 @@ const Calendar: FC<CalendarProps> = ({
   onDeleteEvent,
   onApproveEvent,
   showApprove,
+  errors,
 }) => {
   if (view === 'week')
     return (
@@ -46,6 +48,7 @@ const Calendar: FC<CalendarProps> = ({
         onDeleteEvent={onDeleteEvent}
         onApproveEvent={onApproveEvent}
         showApprove={showApprove}
+        errors={errors}
       >
         <Week />
       </CalendarContextProvider>
@@ -64,6 +67,7 @@ const Calendar: FC<CalendarProps> = ({
         onDeleteEvent={onDeleteEvent}
         onApproveEvent={onApproveEvent}
         showApprove={showApprove}
+        errors={errors}
       >
         <Month />
       </CalendarContextProvider>
@@ -81,6 +85,7 @@ const Calendar: FC<CalendarProps> = ({
       onDeleteEvent={onDeleteEvent}
       onApproveEvent={onApproveEvent}
       showApprove={showApprove}
+      errors={errors}
     >
       <Small />
     </CalendarContextProvider>

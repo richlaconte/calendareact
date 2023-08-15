@@ -16,6 +16,12 @@ export type Day = {
   inMonth: boolean
 }
 
+export type Error = {
+  title: string
+  message: string
+  color: string
+}
+
 export type Colors = {
   primary: string
   secondary: string

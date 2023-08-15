@@ -19,7 +19,7 @@ type DayProps = {
 }
 
 const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
-  const { eventsByDay, selectedDate } = useCalendar()
+  const { eventsByDay, selectedDate, errors } = useCalendar()
   const [mouseDown, setMouseDown] = React.useState(false)
 
   const [start, setStart] = React.useState<{ day: null | Dayjs; hour: number }>({
@@ -39,8 +39,12 @@ const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
   const onMouseUp = () => {
     if (start.day === null && end.day === null) return
     setMouseDown(false)
-    const newStart = dayjs(start.day).hour(start.hour)
-    const newEnd = dayjs(end.day).hour(end.hour)
+    const newStart = dayjs(start.day)
+      .hour(Math.floor(start.hour / 2))
+      .minute((start.hour % 2) * 30)
+    const newEnd = dayjs(end.day)
+      .hour(Math.floor(end.hour / 2))
+      .minute((end.hour % 2) * 30)
     onSelectTime && onSelectTime(newStart, newEnd)
     setStart({ day: null, hour: 0 })
     setEnd({ day: null, hour: 0 })

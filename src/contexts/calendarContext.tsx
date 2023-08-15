@@ -22,6 +22,7 @@ type CalendarContextType = {
   onDeleteEvent?: (event: Event) => unknown
   onApproveEvent?: (event: Event) => unknown
   showApprove?: boolean
+  errors?: any
 }
 
 type CalendarContextProviderProps = {
@@ -37,6 +38,7 @@ type CalendarContextProviderProps = {
   onDeleteEvent?: (event: Event) => unknown
   onApproveEvent?: (event: Event) => unknown
   showApprove?: boolean
+  errors?: any
 }
 
 const CalendarContextProvider: FC<CalendarContextProviderProps> = ({
@@ -52,6 +54,7 @@ const CalendarContextProvider: FC<CalendarContextProviderProps> = ({
   onDeleteEvent,
   onApproveEvent,
   showApprove,
+  errors,
 }) => {
   const viewOffset = undefined
 
@@ -138,6 +141,7 @@ const CalendarContextProvider: FC<CalendarContextProviderProps> = ({
     onDeleteEvent,
     onApproveEvent,
     showApprove,
+    errors,
   }
 
   return <Context.Provider value={value}>{children}</Context.Provider>
