@@ -43,9 +43,9 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
           marginTop: event.isStart ? '2px' : '0px',
           marginBottom: event.isEnd ? '2px' : '0px',
           zIndex: 1,
-          backgroundColor: event?.color?.bg || '#D6D6D6',
+          backgroundColor: event?.color?.bg || event?.project?.colors?.background || '#D6D6D6',
           height: `calc(100% + ${(event.isStart ? -2 : 0) + (event.isEnd ? -2 : 0)}px)`,
-          borderLeft: `5px solid ${event?.color?.border || '#333333'}`,
+          borderLeft: `5px solid ${event?.color?.border || event?.project?.colors?.border || '#333333'}`,
           borderTopRightRadius: event.isStart ? '5px' : '0px',
           borderTopLeftRadius: event.isStart ? '5px' : '0px',
           borderBottomRightRadius: event.isEnd ? '5px' : '0px',
@@ -107,7 +107,7 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
       >
         <Box p={2} width='302px'>
           <Box>
-            <Typography variant='caption'>{event?.project}</Typography>
+            <Typography variant='caption'>{event?.project?.title}</Typography>
           </Box>
           <Box>
             <Typography>{event.title}</Typography>
