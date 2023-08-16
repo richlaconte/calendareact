@@ -18,7 +18,43 @@ type DayProps = {
   onSelectEvent?: (event: EventType | undefined) => unknown
 }
 
-const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
+const isOverlapping = (aStart: any, aEnd: any, bStart: any, bEnd: any) => {
+  return (
+    (aStart.isSameOrAfter(bStart) && aStart.isBefore(bEnd)) ||
+    (aEnd.isAfter(bStart) && aEnd.isSameOrBefore(bEnd)) ||
+    (aStart.isSameOrBefore(bStart) && aEnd.isSameOrAfter(bEnd))
+  )
+}
+
+const findAllOverlappingEvents = (initialStart: dayjs.Dayjs, initialEnd: dayjs.Dayjs, allEvents: any) => {
+  const overlappingEvents: any[] = []
+  let toCheck = [{ start: initialStart, end: initialEnd }]
+
+  while (toCheck.length > 0) {
+    const newToCheck = []
+
+    for (const slot of toCheck) {
+      for (const event of allEvents) {
+        const eventStart = dayjs(event.start)
+        const eventEnd = dayjs(event.end)
+
+        if (
+          isOverlapping(slot.start, slot.end, eventStart, eventEnd) &&
+          !overlappingEvents.some((e) => e.id === event.id)
+        ) {
+          overlappingEvents.push(event)
+          newToCheck.push(event)
+        }
+      }
+    }
+
+    toCheck = newToCheck
+  }
+
+  return overlappingEvents
+}
+
+const Day: FC<DayProps> = ({ day, onSelectTime }) => {
   const { eventsByDay, selectedDate } = useCalendar()
   const [mouseDown, setMouseDown] = React.useState(false)
 
@@ -111,17 +147,23 @@ const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
             let isStart = false
             let isEnd = false
 
+            const newEvents: any = []
+
+            const slotStart =
+              i % 2 !== 0
+                ? dayjs(day)
+                    .hour(Math.floor(i / 2))
+                    ?.add(30, 'minute')
+                : dayjs(day).hour(Math.floor(i / 2))
+
+            const slotEnd = dayjs(slotStart).add(30, 'minute')
+
+            const allOverlappingEvents = findAllOverlappingEvents(slotStart, slotEnd, events)
+
             // see if there is an event that overlaps this half hour
-            const event: EventType | undefined = events.find((event: EventType) => {
+            allOverlappingEvents.forEach((event: EventType) => {
               const eventStart = dayjs(event.start)
               const eventEnd = dayjs(event.end)
-              const slotStart =
-                i % 2 !== 0
-                  ? dayjs(day)
-                      .hour(Math.floor(i / 2))
-                      ?.add(30, 'minute')
-                  : dayjs(day).hour(Math.floor(i / 2))
-              const slotEnd = dayjs(slotStart).add(30, 'minute')
 
               const isBetween: boolean =
                 slotStart.isSameOrAfter(eventStart) && slotStart.isBefore(eventEnd) && slotEnd.isSameOrBefore(eventEnd)
@@ -129,29 +171,51 @@ const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
               isStart = slotStart.isSame(eventStart, 'hour') && slotStart.isSame(eventStart, 'minute')
               isEnd = slotEnd.isSame(eventEnd, 'hour') && slotEnd.isSame(eventEnd, 'minute')
 
-              return isBetween || isStart || isEnd
+              // if isBetwee/isStart/isEnd is true, then this event is in this slot
+              if (isBetween || isStart || isEnd)
+                newEvents.push({
+                  ...event,
+                  isStart: isStart,
+                  isEnd: isEnd,
+                  isBetween: isBetween,
+                  isSecond:
+                    slotStart.isSameOrAfter(eventStart.add(30, 'minute')) &&
+                    slotStart.isBefore(eventStart.add(1, 'hour')),
+                })
+              else {
+                newEvents.push({ id: event.id })
+              }
             })
+
+            newEvents.sort((a: any, b: any) => (a.id > b.id ? 1 : -1))
 
             return (
               <Box
                 key={i}
+                className='emptySlot'
                 height='100%'
+                width='100%'
                 display='flex'
+                gap={1}
                 alignItems='center'
                 justifyContent='center'
                 borderBottom='none'
+                paddingLeft='4px'
+                paddingRight='4px'
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 onMouseDown={(e: any) => {
-                  if (event) return
+                  // if (newEvents.length) return
                   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-                  const isEvent = e?.target?.classList?.contains('event')
-                  const isEventTitle = !isEvent && e?.target?.classList?.contains('eventTitle')
-                  if (isEvent || isEventTitle) return onSelectEvent && onSelectEvent(event)
-                  setMouseDown(true)
-                  setStart({ day, hour: i })
-                  setEnd({ day, hour: i + 1 })
+                  if (e?.target?.classList?.contains('emptySlot')) {
+                    setMouseDown(true)
+                    setStart({ day, hour: i })
+                    setEnd({ day, hour: i + 1 })
+                  }
                 }}
-                onMouseOver={() => mouseDown && setEnd({ day, hour: i + 1 })}
+                onMouseOver={() => {
+                  if (!mouseDown) return
+                  if (i >= start.hour) return setEnd({ day, hour: i + 1 })
+                }}
                 sx={{
                   backgroundColor:
                     start.hour === i && start?.day !== null && start?.day.format('ddd') === dayOfWeek
@@ -173,7 +237,7 @@ const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
                   cursor: mouseDown ? 'move' : 'default',
                 }}
               >
-                {start.day !== null && i === start.hour && (
+                {!newEvents.length && start.day !== null && i === start.hour && (
                   <>
                     <Typography sx={{ userSelect: 'none' }} variant='caption'>
                       {startTimeDisplay.hour}:{startTimeDisplay.minute} {startTimeDisplay.ampm}
@@ -186,7 +250,11 @@ const Day: FC<DayProps> = ({ day, onSelectTime, onSelectEvent }) => {
                     </Typography>
                   </>
                 )}
-                {event && <Event event={event} isStart={isStart} isEnd={isEnd} i={i} />}
+                {newEvents.map((event: any) => {
+                  if (!event?.title) return <Box flexGrow={1} borderLeft='5px solid' />
+                  // eslint-disable-next-line react/jsx-key
+                  return <Event event={event} i={i} />
+                })}
               </Box>
             )
           })}

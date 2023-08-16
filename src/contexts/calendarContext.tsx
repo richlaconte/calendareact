@@ -141,7 +141,7 @@ const CalendarContextProvider: FC<CalendarContextProviderProps> = ({
     onDeleteEvent,
     onApproveEvent,
     showApprove,
-    errors,
+    errors: errors || {},
   }
 
   return <Context.Provider value={value}>{children}</Context.Provider>

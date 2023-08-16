@@ -13,6 +13,7 @@
     "rootDir": "./src",
     "outDir": "./dist/esm",
     "strict": true,
+    "target": "esnext",
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,

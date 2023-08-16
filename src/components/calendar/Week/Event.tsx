@@ -7,7 +7,7 @@ import CheckIcon from '@mui/icons-material/Check'
 
 import { useCalendar } from '../../../contexts/calendarContext'
 
-const Event: FC<{ event: any; isStart: boolean; isEnd: boolean; i: any }> = ({ event, isStart, isEnd, i }) => {
+const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
   const { onSelectEvent, onDeleteEvent, onApproveEvent, showApprove } = useCalendar()
@@ -34,28 +34,26 @@ const Event: FC<{ event: any; isStart: boolean; isEnd: boolean; i: any }> = ({ e
   const id = open ? i : undefined
 
   return (
-    <>
+    <Box display='flex' flexGrow={1} height='100%'>
       <div
         className='event'
         style={{
-          marginTop: isStart ? '3px' : '0px',
-          marginBottom: isEnd ? '3px' : '0px',
+          marginTop: event.isStart ? '3px' : '0px',
+          marginBottom: event.isEnd ? '3px' : '0px',
           zIndex: 1,
-          marginLeft: '4px',
-          marginRight: '4px',
           backgroundColor: '#D6D6D6',
-          height: `calc(100% + ${(isStart ? -3 : 0) + (isEnd ? -3 : 0)}px)`,
-          width: '100%',
+          height: `calc(100% + ${(event.isStart ? -3 : 0) + (event.isEnd ? -3 : 0)}px)`,
           borderLeft: '5px solid #333333',
-          borderTopRightRadius: isStart ? '5px' : '0px',
-          borderTopLeftRadius: isStart ? '5px' : '0px',
-          borderBottomRightRadius: isEnd ? '5px' : '0px',
-          borderBottomLeftRadius: isEnd ? '5px' : '0px',
+          borderTopRightRadius: event.isStart ? '5px' : '0px',
+          borderTopLeftRadius: event.isStart ? '5px' : '0px',
+          borderBottomRightRadius: event.isEnd ? '5px' : '0px',
+          borderBottomLeftRadius: event.isEnd ? '5px' : '0px',
           cursor: 'pointer',
+          flexGrow: 1,
         }}
         onClick={handleClick}
       >
-        {isStart && (
+        {event.isStart && (
           <Box maxWidth='100%' position='relative'>
             <Box
               sx={{
@@ -67,12 +65,33 @@ const Event: FC<{ event: any; isStart: boolean; isEnd: boolean; i: any }> = ({ e
                 top: '0',
                 marginTop: '6px',
                 marginLeft: '6px',
+                overflow: 'hidden',
               }}
             >
-              <Typography className='eventTitle' variant='caption'>
+              <Typography className='eventTitle' variant='caption' noWrap textOverflow='ellipsis'>
                 {event.start?.format('h:mm A')}
               </Typography>
-              <Typography>{event.title}</Typography>
+            </Box>
+          </Box>
+        )}
+        {event.isSecond && (
+          <Box maxWidth='100%' position='relative'>
+            <Box
+              sx={{
+                userSelect: 'none',
+                width: 'calc(100% - 20px)',
+                position: 'absolute',
+                left: '0',
+                right: '0',
+                top: '0',
+                marginTop: '6px',
+                marginLeft: '6px',
+                overflow: 'hidden',
+              }}
+            >
+              <Typography noWrap textOverflow='ellipsis'>
+                {event?.title}
+              </Typography>
             </Box>
           </Box>
         )}
@@ -131,7 +150,7 @@ const Event: FC<{ event: any; isStart: boolean; isEnd: boolean; i: any }> = ({ e
           </Box>
         </Box>
       </Popover>
-    </>
+    </Box>
   )
 }
 
