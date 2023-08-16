@@ -4,6 +4,8 @@ import { Box, Button, Popover, Typography } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import CheckIcon from '@mui/icons-material/Check'
+import EventIcon from '@mui/icons-material/Event'
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
 
 import { useCalendar } from '../../../contexts/calendarContext'
 
@@ -38,12 +40,12 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
       <div
         className='event'
         style={{
-          marginTop: event.isStart ? '3px' : '0px',
-          marginBottom: event.isEnd ? '3px' : '0px',
+          marginTop: event.isStart ? '2px' : '0px',
+          marginBottom: event.isEnd ? '2px' : '0px',
           zIndex: 1,
-          backgroundColor: '#D6D6D6',
-          height: `calc(100% + ${(event.isStart ? -3 : 0) + (event.isEnd ? -3 : 0)}px)`,
-          borderLeft: '5px solid #333333',
+          backgroundColor: event?.color?.bg || '#D6D6D6',
+          height: `calc(100% + ${(event.isStart ? -2 : 0) + (event.isEnd ? -2 : 0)}px)`,
+          borderLeft: `5px solid ${event?.color?.border || '#333333'}`,
           borderTopRightRadius: event.isStart ? '5px' : '0px',
           borderTopLeftRadius: event.isStart ? '5px' : '0px',
           borderBottomRightRadius: event.isEnd ? '5px' : '0px',
@@ -105,13 +107,29 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
       >
         <Box p={2} width='302px'>
           <Box>
-            <Typography variant='caption'>CGT-0125</Typography>
+            <Typography variant='caption'>{event?.project}</Typography>
           </Box>
           <Box>
             <Typography>{event.title}</Typography>
           </Box>
-          <Box>
-            <Typography>Lorem ipsum dolor sit amet consectetur. Est consectetur id ac vitae iaculis enim.</Typography>
+          {event?.description && (
+            <Box>
+              <Typography>{event?.description}</Typography>
+            </Box>
+          )}
+          <Box display='flex' mt={2}>
+            <Box mr={2}>
+              <EventIcon />
+            </Box>
+            <Box>{event.start?.format('MMMM, DD YYYY')}</Box>
+          </Box>
+          <Box display='flex'>
+            <Box mr={2}>
+              <AccessTimeIcon />
+            </Box>
+            <Box>
+              {event.start?.format('h:mm A')} - {event.end?.format('h:mm A')}
+            </Box>
           </Box>
           <Box display='flex' justifyContent='flex-end'>
             <Button

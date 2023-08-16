@@ -196,12 +196,10 @@ const Day: FC<DayProps> = ({ day, onSelectTime }) => {
                 height='100%'
                 width='100%'
                 display='flex'
-                gap={1}
+                gap={0.5}
                 alignItems='center'
                 justifyContent='center'
                 borderBottom='none'
-                paddingLeft='4px'
-                paddingRight='4px'
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 onMouseDown={(e: any) => {
                   // if (newEvents.length) return
