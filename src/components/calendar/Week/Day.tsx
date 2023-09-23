@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import dayjs, { Dayjs } from 'dayjs'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
@@ -93,6 +93,7 @@ const Day: FC<DayProps> = ({ day, onSelectTime }) => {
     setMouseDown(false)
   }
 
+  /*
   const startTimeDisplay = {
     hour: (function () {
       const hour = Math.floor(start.hour / 2)
@@ -113,6 +114,7 @@ const Day: FC<DayProps> = ({ day, onSelectTime }) => {
     minute: end.hour % 2 === 0 ? '00' : '30',
     ampm: end.hour / 2 < 12 || end.hour === 48 ? 'AM' : 'PM',
   }
+  */
 
   const monthName = day.format('MMMM').toLowerCase()
   const month = monthName in eventsByDay ? eventsByDay[monthName] : {}
@@ -235,7 +237,7 @@ const Day: FC<DayProps> = ({ day, onSelectTime }) => {
                   cursor: mouseDown ? 'move' : 'default',
                 }}
               >
-                {!newEvents.length && start.day !== null && i === start.hour && (
+                {/*!newEvents.length && start.day !== null && i === start.hour && (
                   <>
                     <Typography sx={{ userSelect: 'none' }} variant='caption'>
                       {startTimeDisplay.hour}:{startTimeDisplay.minute} {startTimeDisplay.ampm}
@@ -247,7 +249,7 @@ const Day: FC<DayProps> = ({ day, onSelectTime }) => {
                       {endTimeDisplay.hour}:{endTimeDisplay.minute} {endTimeDisplay.ampm}
                     </Typography>
                   </>
-                )}
+                )*/}
                 {newEvents.map((event: any) => {
                   if (!event?.title) return <Box flexGrow={1} borderLeft='5px solid' />
                   // eslint-disable-next-line react/jsx-key

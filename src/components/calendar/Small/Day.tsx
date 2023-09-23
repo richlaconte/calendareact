@@ -14,7 +14,7 @@ const StyledIconButton = styled(IconButton)<StyledIconButtonProps>(({ isSelected
   height: '100%',
   backgroundColor: isSelected ? colors.small.selected.background : null,
   '&:hover': {
-    backgroundColor: isSelected ? '#0e5de8' : null,
+    backgroundColor: isSelected ? colors.small.selected.hover.background : null,
   },
 }))
 
@@ -28,6 +28,8 @@ const Day: FC<any> = ({ day, key }) => {
   const dayNumber = day.day.format('D')
 
   const events = eventsByDay[monthName]?.[dayNumber] || []
+
+  console.log(events)
 
   return (
     <Box key={key} display='flex' flexGrow={1} width='100%' textAlign='center' justifyContent='center'>
@@ -64,7 +66,7 @@ const Day: FC<any> = ({ day, key }) => {
                     cx='2.7429'
                     cy='2.4'
                     r='2.4'
-                    fill={isSelected ? colors.small.selected.dots : colors.small.unselected.dots}
+                    fill={events[0]?.project?.colors?.border || 'rgb(214, 214, 214)'}
                   />
                 </svg>
               )}
@@ -74,7 +76,7 @@ const Day: FC<any> = ({ day, key }) => {
                     cx='2.7429'
                     cy='2.4'
                     r='2.4'
-                    fill={isSelected ? colors.small.selected.dots : colors.small.unselected.dots}
+                    fill={events[1]?.project?.colors?.border || 'rgb(214, 214, 214)'}
                   />
                 </svg>
               )}
@@ -84,7 +86,7 @@ const Day: FC<any> = ({ day, key }) => {
                     cx='2.7429'
                     cy='2.4'
                     r='2.4'
-                    fill={isSelected ? colors.small.selected.dots : colors.small.unselected.dots}
+                    fill={events[2]?.project?.colors?.border || 'rgb(214, 214, 214)'}
                   />
                 </svg>
               )}
