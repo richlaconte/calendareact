@@ -148,6 +148,8 @@ const Day: FC<DayProps> = ({ day, onSelectTime }) => {
           .map((_, i) => {
             let isStart = false
             let isEnd = false
+            let isPartialStart = false
+            let isPartialEnd = false
 
             const newEvents: any = []
 
@@ -173,16 +175,27 @@ const Day: FC<DayProps> = ({ day, onSelectTime }) => {
               isStart = slotStart.isSame(eventStart, 'hour') && slotStart.isSame(eventStart, 'minute')
               isEnd = slotEnd.isSame(eventEnd, 'hour') && slotEnd.isSame(eventEnd, 'minute')
 
-              // if isBetwee/isStart/isEnd is true, then this event is in this slot
-              if (isBetween || isStart || isEnd)
+              isPartialStart = slotStart.isBefore(eventStart) && slotEnd.isAfter(eventStart)
+              isPartialEnd = slotEnd.isAfter(eventEnd) && slotStart.isBefore(eventEnd)
+
+              // if isBetween/isStart/isEnd is true, then this event is in this slot
+              if (isBetween || isStart || isEnd || isPartialStart || isPartialEnd)
                 newEvents.push({
                   ...event,
                   isStart: isStart,
+                  isPartialStart: isPartialStart,
                   isEnd: isEnd,
+                  isPartialEnd: isPartialEnd,
                   isBetween: isBetween,
+                  isTitle:
+                    isStart || (slotStart.subtract(30, 'minute').isBefore(eventStart) && slotStart.isAfter(eventStart)),
                   isSecond:
                     slotStart.isSameOrAfter(eventStart.add(30, 'minute')) &&
                     slotStart.isBefore(eventStart.add(1, 'hour')),
+                  slot: {
+                    start: slotStart,
+                    end: slotEnd,
+                  },
                 })
               else {
                 newEvents.push({ id: event.id })

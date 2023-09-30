@@ -35,48 +35,34 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
   const open = Boolean(anchorEl)
   const id = open ? i : undefined
 
+  const marginTop = () => {
+    if (event.isStart) return '2px'
+    return '0px'
+  }
+
   return (
-    <Box display='flex' flexGrow={1} height='100%'>
+    <Box display='flex' flexGrow={1} height='100%' alignItems={event.isPartialStart ? 'flex-end' : ''}>
       <div
         className='event'
         style={{
-          marginTop: event.isStart ? '2px' : '0px',
+          marginTop: marginTop(),
           marginBottom: event.isEnd ? '2px' : '0px',
           zIndex: 1,
           backgroundColor: event?.color?.bg || event?.project?.colors?.background || '#D6D6D6',
-          height: `calc(100% + ${(event.isStart ? -2 : 0) + (event.isEnd ? -2 : 0)}px)`,
+          height: `calc(100% + ${event.isPartialStart || event?.isPartialEnd ? '-50%' : '0'} + ${
+            (event.isStart ? -2 : 0) + (event.isEnd ? -2 : 0)
+          }px)`,
           borderLeft: `5px solid ${event?.color?.border || event?.project?.colors?.border || '#333333'}`,
-          borderTopRightRadius: event.isStart ? '5px' : '0px',
-          borderTopLeftRadius: event.isStart ? '5px' : '0px',
-          borderBottomRightRadius: event.isEnd ? '5px' : '0px',
-          borderBottomLeftRadius: event.isEnd ? '5px' : '0px',
+          borderTopRightRadius: event.isStart || event.isPartialStart ? '5px' : '0px',
+          borderTopLeftRadius: event.isStart || event.isPartialStart ? '5px' : '0px',
+          borderBottomRightRadius: event.isEnd || event.isPartialEnd ? '5px' : '0px',
+          borderBottomLeftRadius: event.isEnd || event.isPartialEnd ? '5px' : '0px',
           cursor: 'pointer',
           flexGrow: 1,
         }}
         onClick={handleClick}
       >
-        {event.isStart && (
-          <Box maxWidth='100%' position='relative'>
-            <Box
-              sx={{
-                userSelect: 'none',
-                width: 'calc(100% - 20px)',
-                position: 'absolute',
-                left: '0',
-                right: '0',
-                top: '0',
-                marginTop: '6px',
-                marginLeft: '6px',
-                overflow: 'hidden',
-              }}
-            >
-              <Typography className='eventTitle' variant='caption' noWrap textOverflow='ellipsis'>
-                {event.start?.format('h:mm A')}
-              </Typography>
-            </Box>
-          </Box>
-        )}
-        {event.isSecond && (
+        {event.isTitle && (
           <Box maxWidth='100%' position='relative'>
             <Box
               sx={{
@@ -93,6 +79,27 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
             >
               <Typography noWrap textOverflow='ellipsis'>
                 {event?.title}
+              </Typography>
+            </Box>
+          </Box>
+        )}
+        {event.isSecond && !event.isPartialEnd && (
+          <Box maxWidth='100%' position='relative'>
+            <Box
+              sx={{
+                userSelect: 'none',
+                width: 'calc(100% - 20px)',
+                position: 'absolute',
+                left: '0',
+                right: '0',
+                top: '0',
+                marginTop: '6px',
+                marginLeft: '6px',
+                overflow: 'hidden',
+              }}
+            >
+              <Typography className='eventTitle' variant='caption' noWrap textOverflow='ellipsis'>
+                {event.start?.format('h:mm A')}
               </Typography>
             </Box>
           </Box>
