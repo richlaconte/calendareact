@@ -1,5 +1,7 @@
+/* eslint-disable prettier/prettier */
 import React, { FC, useState } from 'react'
 import { Box, Button, Popover, Typography } from '@mui/material'
+import duration from 'dayjs/plugin/duration'
 
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
@@ -8,6 +10,9 @@ import EventIcon from '@mui/icons-material/Event'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 
 import { useCalendar } from '../../../contexts/calendarContext'
+
+import dayjs from 'dayjs'
+dayjs.extend(duration)
 
 const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
@@ -39,6 +44,8 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
     if (event.isStart) return '2px'
     return '0px'
   }
+
+  console.log(event)
 
   return (
     <Box display='flex' flexGrow={1} height='100%' alignItems={event.isPartialStart ? 'flex-end' : ''}>
@@ -113,15 +120,17 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <Box p={2} width='302px'>
-          <Box>
-            <Typography variant='caption'>{event?.project?.title}</Typography>
+          <Box display='flex'>
+            <Box borderLeft='5px solid rgb(83, 142, 245)' bgcolor='rgb(235, 243, 255)' borderRadius='5px' px={1} mb={1}>
+              <Typography variant='caption'>{event?.project?.title}</Typography>
+            </Box>
           </Box>
           <Box>
-            <Typography>{event.title}</Typography>
+            <Typography fontSize='18px'>{event.title}</Typography>
           </Box>
           {event?.description && (
             <Box>
-              <Typography>{event?.description}</Typography>
+              <Typography noWrap>{event?.description}</Typography>
             </Box>
           )}
           <Box display='flex' mt={2}>
@@ -135,7 +144,8 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
               <AccessTimeIcon />
             </Box>
             <Box>
-              {event.start?.format('h:mm A')} - {event.end?.format('h:mm A')}
+              {event.start?.format('h:mm A')} - {event.end?.format('h:mm A')}{' '}
+              ({event.end.diff(event.start, 'hour', true)} hrs)
             </Box>
           </Box>
           <Box display='flex' justifyContent='flex-end'>
