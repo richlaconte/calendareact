@@ -144,8 +144,8 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
               <AccessTimeIcon />
             </Box>
             <Box>
-              {event.start?.format('h:mm A')} - {event.end?.format('h:mm A')}{' '}
-              ({event.end.diff(event.start, 'hour', true)} hrs)
+              {event.start?.format('h:mm A')} - {event.end?.format('h:mm A')} (
+              {event.end.diff(event.start, 'hour', true)} hrs)
             </Box>
           </Box>
           <Box display='flex' justifyContent='flex-end'>
