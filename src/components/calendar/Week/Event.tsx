@@ -45,8 +45,6 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
     return '0px'
   }
 
-  console.log(event)
-
   return (
     <Box display='flex' flexGrow={1} height='100%' alignItems={event.isPartialStart ? 'flex-end' : ''}>
       <div
@@ -121,7 +119,7 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
       >
         <Box p={2} width='302px'>
           <Box display='flex'>
-            <Box borderLeft='5px solid rgb(83, 142, 245)' bgcolor='rgb(235, 243, 255)' borderRadius='5px' px={1} mb={1}>
+            <Box borderLeft={`5px solid ${event?.project?.colors?.border}`} bgcolor={event?.project?.colors?.background} borderRadius='5px' px={1} mb={1}>
               <Typography variant='caption'>{event?.project?.title}</Typography>
             </Box>
           </Box>
