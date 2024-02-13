@@ -82,13 +82,11 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
                 overflow: 'hidden',
               }}
             >
-              {
-                (event.isPartialStart || event.isPartialEnd) ? null : (
-                  <Typography noWrap textOverflow='ellipsis'>
-                    {event?.title}
-                  </Typography>
-                )
-              }
+              {event.isPartialStart || event.isPartialEnd ? null : (
+                <Typography noWrap textOverflow='ellipsis'>
+                  {event?.title}
+                </Typography>
+              )}
             </Box>
           </Box>
         )}
@@ -123,7 +121,13 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
       >
         <Box p={2} width='302px'>
           <Box display='flex'>
-            <Box borderLeft={`5px solid ${event?.project?.colors?.border}`} bgcolor={event?.project?.colors?.background} borderRadius='5px' px={1} mb={1}>
+            <Box
+              borderLeft={`5px solid ${event?.project?.colors?.border}`}
+              bgcolor={event?.project?.colors?.background}
+              borderRadius='5px'
+              px={1}
+              mb={1}
+            >
               <Typography variant='caption'>{event?.project?.title}</Typography>
             </Box>
           </Box>
