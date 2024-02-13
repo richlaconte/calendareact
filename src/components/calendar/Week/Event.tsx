@@ -82,9 +82,13 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
                 overflow: 'hidden',
               }}
             >
-              <Typography noWrap textOverflow='ellipsis'>
-                {event?.title}
-              </Typography>
+              {
+                (event.isPartialStart || event.isPartialEnd) ? null : (
+                  <Typography noWrap textOverflow='ellipsis'>
+                    {event?.title}
+                  </Typography>
+                )
+              }
             </Box>
           </Box>
         )}
