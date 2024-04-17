@@ -38,7 +38,7 @@ export const defaultColors: Colors = {
       text: '#2C2F35',
       dots: '#ffffff',
       hover: {
-        background: '#57B379',
+        background: '#6BDA94',
       },
     },
     unselected: {

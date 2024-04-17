@@ -1,10 +1,12 @@
 import React, { FC, useContext, Context } from 'react'
 import dayjs, { Dayjs } from 'dayjs'
 import { Event, Day, Colors } from '../components/calendar/CalendarTypes'
+import { ErrorList } from '../types/errors'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 dayjs.extend(isSameOrBefore)
 
 import { defaultColors } from '../consts'
+import { DayAction } from '../types/actions'
 
 const Context: any = React.createContext({})
 
@@ -22,7 +24,8 @@ type CalendarContextType = {
   onDeleteEvent?: (event: Event) => unknown
   onApproveEvent?: (event: Event) => unknown
   showApprove?: boolean
-  errors?: any
+  errors?: ErrorList
+  dayAction: DayAction
 }
 
 type CalendarContextProviderProps = {
@@ -38,7 +41,8 @@ type CalendarContextProviderProps = {
   onDeleteEvent?: (event: Event) => unknown
   onApproveEvent?: (event: Event) => unknown
   showApprove?: boolean
-  errors?: any
+  errors?: ErrorList
+  dayAction?: DayAction
 }
 
 const CalendarContextProvider: FC<CalendarContextProviderProps> = ({
@@ -55,6 +59,7 @@ const CalendarContextProvider: FC<CalendarContextProviderProps> = ({
   onApproveEvent,
   showApprove,
   errors,
+  dayAction,
 }) => {
   const viewOffset = undefined
 
@@ -142,6 +147,7 @@ const CalendarContextProvider: FC<CalendarContextProviderProps> = ({
     onApproveEvent,
     showApprove,
     errors: errors || {},
+    dayAction,
   }
 
   return <Context.Provider value={value}>{children}</Context.Provider>
