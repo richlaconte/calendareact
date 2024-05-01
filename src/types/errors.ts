@@ -1,7 +1,8 @@
 import { Dayjs } from 'dayjs'
 
 export type ErrorObject = {
-  title: string
+  id: string
+  title?: string
   onClick: (day: Dayjs) => void
   icon: JSX.Element
 }

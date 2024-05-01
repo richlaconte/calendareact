@@ -156,21 +156,21 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
           </Box>
           <Box display='flex' justifyContent='flex-end'>
             <Button
-              onClick={handleEdit}
-              variant='outlined'
-              size='small'
-              sx={{ minWidth: '32px', width: '32px', height: '32px', padding: '0px', marginRight: '8px' }}
-            >
-              <EditIcon />
-            </Button>
-            <Button
               onClick={handleDelete}
               variant='outlined'
               size='small'
               color='error'
-              sx={{ minWidth: '32px', width: '32px', height: '32px', padding: '0px' }}
+              sx={{ minWidth: '32px', width: '32px', height: '32px', padding: '0px', marginRight: '8px' }}
             >
               <DeleteOutlineIcon />
+            </Button>
+            <Button
+              onClick={handleEdit}
+              variant='outlined'
+              size='small'
+              sx={{ minWidth: '32px', width: '32px', height: '32px', padding: '0px' }}
+            >
+              <EditIcon />
             </Button>
             {showApprove && (
               <Box

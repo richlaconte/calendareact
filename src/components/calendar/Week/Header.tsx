@@ -15,7 +15,7 @@ const Header: FC<{ weekDays: any }> = ({ weekDays }) => {
         const month = year && monthName in year ? year[monthName] : {}
         const dayOfMonth = day.format('D')
         const dayErrors = dayOfMonth in month ? month[dayOfMonth] : []
-        const requested = dayErrors.filter((error: { title: string }) => error.title === 'Requested')
+        const dayError = dayErrors.length ? dayErrors[0] : null
 
         return (
           <Box
@@ -36,27 +36,37 @@ const Header: FC<{ weekDays: any }> = ({ weekDays }) => {
               >
                 {day.format('ddd')}
               </Typography>
-              {!!requested.length && (
+              {!!dayError && (
                 <Box display='flex' alignItems='center'>
-                  <Typography
-                    sx={{
-                      fontSize: '12px',
-                      fontWeight: '500',
-                      lineHeight: '140%',
-                      marginRight: '6px',
-                    }}
-                  >
-                    Requested
-                  </Typography>
-                  {requested[0]?.icon}
+                  {dayError?.title && (
+                    <Typography
+                      sx={{
+                        fontSize: '12px',
+                        fontWeight: '500',
+                        lineHeight: '140%',
+                        marginRight: '6px',
+                      }}
+                    >
+                      {dayError.title}
+                    </Typography>
+                  )}
+                  {dayError?.icon}
                 </Box>
               )}
             </Box>
-            <Box pl={1} display='flex' width='100%' justifyContent='space-between'>
-              <Typography sx={{ fontSize: '22px', fontWeight: '500', lineHeight: '32px' }}>
+            <Box pl={1} display='flex' width='100%' justifyContent='space-between' flexWrap='wrap' overflow='hidden'>
+              <Typography
+                sx={{
+                  fontSize: '22px',
+                  fontWeight: '500',
+                  lineHeight: '32px',
+                  width: '30px',
+                  marginBottom: '12px',
+                }}
+              >
                 {day.format('DD')}
               </Typography>
-              {!!requested.length && requested[0]?.onClick && (
+              {!!dayError && (
                 <Button
                   variant='outlined'
                   sx={{
@@ -64,18 +74,19 @@ const Header: FC<{ weekDays: any }> = ({ weekDays }) => {
                     marginRight: '8px',
                     marginTop: '2px',
                     height: '30px',
+                    marginBottom: '8px',
                   }}
-                  onClick={() => requested[0]?.onClick(day)}
+                  onClick={() => dayError?.onClick(day)}
                 >
                   Submit
                 </Button>
               )}
-              {dayAction && dayAction?.onClick && !requested.length && (
+              {dayAction && dayAction?.onClick && !dayError && (
                 <IconButton
                   color={dayAction.color}
-                  onClick={() => dayAction.onClick(day)}
+                  onClick={(e) => dayAction.onClick(e, day)}
                   size='small'
-                  sx={{ marginRight: '8px' }}
+                  sx={{ marginRight: '8px', marginBottom: '8px' }}
                 >
                   {dayAction.icon}
                 </IconButton>
