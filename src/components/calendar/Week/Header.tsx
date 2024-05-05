@@ -66,7 +66,7 @@ const Header: FC<{ weekDays: any }> = ({ weekDays }) => {
               >
                 {day.format('DD')}
               </Typography>
-              {!!dayError && (
+              {!!dayError && !!dayError?.onClick && (
                 <Button
                   variant='outlined'
                   sx={{

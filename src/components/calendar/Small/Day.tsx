@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Box, IconButton, IconButtonProps, Typography } from '@mui/material'
+import { Badge, Box, IconButton, IconButtonProps, Typography } from '@mui/material'
 import { styled } from '@mui/system'
 import { Day } from '../CalendarTypes'
 import { useCalendar } from '../../../contexts/calendarContext'
@@ -19,7 +19,7 @@ const StyledIconButton = styled(IconButton)<StyledIconButtonProps>(({ isSelected
 }))
 
 const Day: FC<any> = ({ day, key }) => {
-  const { colors, selectedDate, eventsByDay, onSelectDate } = useCalendar()
+  const { colors, selectedDate, eventsByDay, onSelectDate, errors } = useCalendar()
 
   const isSelected = day.day.isSame(selectedDate, 'day')
   const isToday = day.day.isSame(new Date(), 'day')
@@ -27,11 +27,21 @@ const Day: FC<any> = ({ day, key }) => {
   const monthName = day.day.format('MMMM').toLowerCase()
   const dayNumber = day.day.format('D')
 
+  const yearNumber = day.day.format('YYYY')
+  const year = errors && yearNumber in errors ? errors[yearNumber] : {}
+  const month = year && monthName in year ? year[monthName] : {}
+  const dayOfMonth = day.day.format('D')
+  const dayErrors = dayOfMonth in month ? month[dayOfMonth] : []
+  const dayError = dayErrors.length ? dayErrors[0] : null
+
+  console.log(day.day.format('DD-MM-YYYY'))
+  console.log(!!dayError)
+
   const events = eventsByDay[monthName]?.[dayNumber] || []
 
   return (
     <Box key={key} display='flex' flexGrow={1} width='100%' textAlign='center' justifyContent='center'>
-      <Box width='36.8px'>
+      <Box width='36.8px' height='34.8px'>
         <StyledIconButton
           size='small'
           onClick={() => onSelectDate && onSelectDate(day.day)}
@@ -43,19 +53,21 @@ const Day: FC<any> = ({ day, key }) => {
         >
           <Box display='flex' flexDirection='column' justifyContent='center'>
             <Box>
-              <Typography
-                color={
-                  day.inMonth
-                    ? isSelected
-                      ? colors.small.selected.text
-                      : colors.small.unselected.text
-                    : colors.small.notInMonth.text
-                }
-                fontSize='13.2px'
-                fontWeight='600'
-              >
-                {day.day.format('D')}
-              </Typography>
+              <Badge color='error' variant='dot' badgeContent={dayError ? null : 0}>
+                <Typography
+                  color={
+                    day.inMonth
+                      ? isSelected
+                        ? colors.small.selected.text
+                        : colors.small.unselected.text
+                      : colors.small.notInMonth.text
+                  }
+                  fontSize='13.2px'
+                  fontWeight='600'
+                >
+                  {day.day.format('D')}
+                </Typography>
+              </Badge>
             </Box>
             <Box display='flex' height='5px' justifyContent='center'>
               {day.inMonth && events.length >= 1 && (
