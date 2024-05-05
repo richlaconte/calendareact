@@ -1,6 +1,6 @@
 {
   "name": "calendareact",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "A TS calendar component built with MUI and Dayjs",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -49,7 +49,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.1",
     "@mui/material": "^5.14.1",
-    "@types/react": "^18.0.28",
+    "@types/react": "^18.3.1",
     "dayjs": "^1.11.9",
     "react": ">=16",
     "react-dom": "^18.2.0",
