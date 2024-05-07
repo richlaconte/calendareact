@@ -34,9 +34,6 @@ const Day: FC<any> = ({ day, key }) => {
   const dayErrors = dayOfMonth in month ? month[dayOfMonth] : []
   const dayError = dayErrors.length ? dayErrors[0] : null
 
-  console.log(day.day.format('DD-MM-YYYY'))
-  console.log(!!dayError)
-
   const events = eventsByDay[monthName]?.[dayNumber] || []
 
   return (
