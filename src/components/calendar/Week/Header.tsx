@@ -10,9 +10,9 @@ const Header: FC<{ weekDays: any }> = ({ weekDays }) => {
       <Box maxWidth='48px' flexGrow={1} />
       {weekDays.map((day: any) => {
         const yearNumber = day.format('YYYY')
-        const monthName = day.format('MMMM').toLowerCase()
+        const monthNumber = day.month()
         const year = errors && yearNumber in errors ? errors[yearNumber] : {}
-        const month = year && monthName in year ? year[monthName] : {}
+        const month = year && monthNumber in year ? year[monthNumber] : {}
         const dayOfMonth = day.format('D')
         const dayErrors = dayOfMonth in month ? month[dayOfMonth] : []
         const dayError = dayErrors.length ? dayErrors[0] : null

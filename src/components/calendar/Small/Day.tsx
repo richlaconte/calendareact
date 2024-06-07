@@ -25,11 +25,12 @@ const Day: FC<any> = ({ day, key }) => {
   const isToday = day.day.isSame(new Date(), 'day')
 
   const monthName = day.day.format('MMMM').toLowerCase()
+  const monthNumber = day.day.month()
   const dayNumber = day.day.format('D')
 
   const yearNumber = day.day.format('YYYY')
   const year = errors && yearNumber in errors ? errors[yearNumber] : {}
-  const month = year && monthName in year ? year[monthName] : {}
+  const month = year && monthNumber in year ? year[monthNumber] : {}
   const dayOfMonth = day.day.format('D')
   const dayErrors = dayOfMonth in month ? month[dayOfMonth] : []
   const dayError = dayErrors.length ? dayErrors[0] : null
