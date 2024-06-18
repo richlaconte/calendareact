@@ -37,6 +37,9 @@ const Day: FC<any> = ({ day, key }) => {
 
   const events = eventsByDay[monthName]?.[dayNumber] || []
 
+  console.log(dayOfMonth)
+  console.log(dayError)
+
   return (
     <Box key={key} display='flex' flexGrow={1} width='100%' textAlign='center' justifyContent='center'>
       <Box width='36.8px' height='34.8px'>
@@ -51,7 +54,7 @@ const Day: FC<any> = ({ day, key }) => {
         >
           <Box display='flex' flexDirection='column' justifyContent='center'>
             <Box>
-              <Badge color='error' variant='dot' badgeContent={dayError ? null : 0}>
+              <Badge color={dayError?.errorColor ? dayError.errorColor : 'error'} variant='dot' badgeContent={dayError ? null : 0}>
                 <Typography
                   color={
                     day.inMonth
