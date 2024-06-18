@@ -6,7 +6,7 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 dayjs.extend(isSameOrBefore)
 
 import { defaultColors } from '../consts'
-import { DayAction } from '../types/actions'
+import { DayActions } from '../types/actions'
 
 const Context: any = React.createContext({})
 
@@ -25,7 +25,7 @@ type CalendarContextType = {
   onApproveEvent?: (event: Event) => unknown
   showApprove?: boolean
   errors?: ErrorList
-  dayAction: DayAction
+  dayActions: DayActions
 }
 
 type CalendarContextProviderProps = {
@@ -42,7 +42,7 @@ type CalendarContextProviderProps = {
   onApproveEvent?: (event: Event) => unknown
   showApprove?: boolean
   errors?: ErrorList
-  dayAction?: DayAction
+  dayActions?: DayActions
 }
 
 const CalendarContextProvider: FC<CalendarContextProviderProps> = ({
@@ -59,7 +59,7 @@ const CalendarContextProvider: FC<CalendarContextProviderProps> = ({
   onApproveEvent,
   showApprove,
   errors,
-  dayAction,
+  dayActions,
 }) => {
   const viewOffset = undefined
 
@@ -147,7 +147,7 @@ const CalendarContextProvider: FC<CalendarContextProviderProps> = ({
     onApproveEvent,
     showApprove,
     errors: errors || {},
-    dayAction,
+    dayActions,
   }
 
   return <Context.Provider value={value}>{children}</Context.Provider>

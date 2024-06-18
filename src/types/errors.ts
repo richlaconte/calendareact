@@ -13,7 +13,7 @@ export type ErrorObject = {
   title?: string
   onClick: (day: Dayjs) => void
   icon: JSX.Element
-}
+} | null
 
 export type ErrorList = {
   [key: string]: {

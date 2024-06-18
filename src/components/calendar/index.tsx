@@ -20,7 +20,7 @@ type CalendarProps = {
   onApproveEvent?: (event: Event) => unknown
   showApprove?: boolean
   errors?: any
-  dayAction?: any
+  dayActions?: any
 }
 
 const Calendar: FC<CalendarProps> = ({
@@ -35,7 +35,7 @@ const Calendar: FC<CalendarProps> = ({
   onApproveEvent,
   showApprove,
   errors,
-  dayAction,
+  dayActions,
 }) => {
   if (view === 'week')
     return (
@@ -51,7 +51,7 @@ const Calendar: FC<CalendarProps> = ({
         onApproveEvent={onApproveEvent}
         showApprove={showApprove}
         errors={errors}
-        dayAction={dayAction}
+        dayActions={dayActions}
       >
         <Week />
       </CalendarContextProvider>
@@ -71,7 +71,7 @@ const Calendar: FC<CalendarProps> = ({
         onApproveEvent={onApproveEvent}
         showApprove={showApprove}
         errors={errors}
-        dayAction={dayAction}
+        dayActions={dayActions}
       >
         <Month />
       </CalendarContextProvider>
@@ -90,7 +90,7 @@ const Calendar: FC<CalendarProps> = ({
       onApproveEvent={onApproveEvent}
       showApprove={showApprove}
       errors={errors}
-      dayAction={dayAction}
+      dayActions={dayActions}
     >
       <Small />
     </CalendarContextProvider>

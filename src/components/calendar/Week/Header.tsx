@@ -1,9 +1,10 @@
 import React, { FC } from 'react'
 import { Box, Button, IconButton, Typography } from '@mui/material'
 import { useCalendar } from '../../../contexts/calendarContext'
+import { ErrorObject } from '../../../types/errors'
 
 const Header: FC<{ weekDays: any }> = ({ weekDays }) => {
-  const { errors, dayAction } = useCalendar()
+  const { errors, dayActions } = useCalendar()
 
   return (
     <Box display='flex' maxHeight='72px' flexGrow={1} sx={{ overflowY: 'scroll' }}>
@@ -15,7 +16,9 @@ const Header: FC<{ weekDays: any }> = ({ weekDays }) => {
         const month = year && monthNumber in year ? year[monthNumber] : {}
         const dayOfMonth = day.format('D')
         const dayErrors = dayOfMonth in month ? month[dayOfMonth] : []
-        const dayError = dayErrors.length ? dayErrors[0] : null
+        const dayError: ErrorObject = dayErrors.length ? dayErrors[0] : null
+
+        const dayAction = dayActions && !dayError ? dayActions.default : dayError?.id && dayActions[dayError.id]
 
         return (
           <Box
@@ -37,7 +40,7 @@ const Header: FC<{ weekDays: any }> = ({ weekDays }) => {
                 {day.format('ddd')}
               </Typography>
               {!!dayError && (
-                <Box display='flex' alignItems='center'>
+                <Box display='flex' alignItems='center' mr='6px'>
                   {dayError?.title && (
                     <Typography
                       sx={{
@@ -81,7 +84,7 @@ const Header: FC<{ weekDays: any }> = ({ weekDays }) => {
                   Submit
                 </Button>
               )}
-              {dayAction && dayAction?.onClick && !dayError && (
+              {dayAction && dayAction?.onClick && (
                 <IconButton
                   color={dayAction.color}
                   onClick={(e) => dayAction.onClick(e, day)}

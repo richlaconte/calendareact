@@ -37,9 +37,6 @@ const Day: FC<any> = ({ day, key }) => {
 
   const events = eventsByDay[monthName]?.[dayNumber] || []
 
-  console.log(dayOfMonth)
-  console.log(dayError)
-
   return (
     <Box key={key} display='flex' flexGrow={1} width='100%' textAlign='center' justifyContent='center'>
       <Box width='36.8px' height='34.8px'>
