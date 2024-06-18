@@ -54,7 +54,11 @@ const Day: FC<any> = ({ day, key }) => {
         >
           <Box display='flex' flexDirection='column' justifyContent='center'>
             <Box>
-              <Badge color={dayError?.errorColor ? dayError.errorColor : 'error'} variant='dot' badgeContent={dayError ? null : 0}>
+              <Badge
+                color={dayError?.errorColor ? dayError.errorColor : 'error'}
+                variant='dot'
+                badgeContent={dayError ? null : 0}
+              >
                 <Typography
                   color={
                     day.inMonth
