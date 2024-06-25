@@ -202,15 +202,16 @@ const Day: FC<DayProps> = ({ day, onSelectTime }) => {
               }
             })
 
-            newEvents.sort((a: any, b: any) => (a.id > b.id ? 1 : -1))
+            newEvents.sort((a: any, b: any) => (a.start > b.start ? 1 : -1))
 
             return (
               <Box
                 key={i}
-                className='emptySlot'
+                className={`emptySlot ${newEvents.length > 1 ? 'overlap' : ''}`}
                 height='100%'
                 width='100%'
                 display='flex'
+                flexDirection={newEvents.length > 1 ? 'column' : 'row'}
                 gap={0.5}
                 alignItems='center'
                 justifyContent='center'

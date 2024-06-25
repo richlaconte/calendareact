@@ -46,7 +46,7 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
   }
 
   return (
-    <Box display='flex' flexGrow={1} height='100%' alignItems={event.isPartialStart ? 'flex-end' : ''}>
+    <Box display='flex' flexGrow={1} height='100%' width='100%' alignItems={event.isPartialStart ? 'flex-end' : ''}>
       <div
         className='event'
         style={{
@@ -54,8 +54,8 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
           marginBottom: event.isEnd ? '2px' : '0px',
           zIndex: 1,
           backgroundColor: event?.color?.bg || event?.project?.colors?.background || '#D6D6D6',
-          height: `calc(100% + ${event.isPartialStart || event?.isPartialEnd ? '-50%' : '0'} + ${
-            (event.isStart ? -2 : 0) + (event.isEnd ? -2 : 0)
+          height: `calc(100% + ${
+            (event.isPartialStart || event.isStart ? -2 : 0) + (event?.isPartialEnd || event.isEnd ? -2 : 0)
           }px)`,
           borderLeft: `5px solid ${event?.color?.border || event?.project?.colors?.border || '#333333'}`,
           borderTopRightRadius: event.isStart || event.isPartialStart ? '5px' : '0px',
