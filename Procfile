@@ -1,1 +1,1 @@
-web: cd example && npm run preview -- --host 0.0.0.0 --port $PORT
+web: cd example && npm i && npm run preview -- --host 0.0.0.0 --port $PORT
