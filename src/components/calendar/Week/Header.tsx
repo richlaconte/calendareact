@@ -7,7 +7,7 @@ const Header: FC<{ weekDays: any }> = ({ weekDays }) => {
   const { errors, dayActions } = useCalendar()
 
   return (
-    <Box display='flex' maxHeight='72px' flexGrow={1} sx={{ overflowY: 'scroll' }}>
+    <Box display='flex' maxHeight='72px' flexGrow={1} sx={{ overflowY: 'scroll', overflowX: 'hidden' }}>
       <Box maxWidth='48px' flexGrow={1} />
       {weekDays.map((day: any) => {
         const yearNumber = day.format('YYYY')

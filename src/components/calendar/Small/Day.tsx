@@ -12,9 +12,11 @@ interface StyledIconButtonProps extends IconButtonProps {
 const StyledIconButton = styled(IconButton)<StyledIconButtonProps>(({ isSelected, colors }) => ({
   width: '100%',
   height: '100%',
-  backgroundColor: isSelected ? colors.small.selected.background : null,
+  backgroundColor: isSelected ? colors.small.selected.background : colors.small.unselected.background || null,
   '&:hover': {
-    backgroundColor: isSelected ? colors.small.selected.hover.background : null,
+    backgroundColor: isSelected
+      ? colors.small.selected.hover.background
+      : colors.small.unselected.hover.background || null,
   },
 }))
 
@@ -39,14 +41,14 @@ const Day: FC<any> = ({ day, key }) => {
 
   return (
     <Box key={key} display='flex' flexGrow={1} width='100%' textAlign='center' justifyContent='center'>
-      <Box width='36.8px' height='34.8px'>
+      <Box sx={{ aspectRatio: '1' }} width='100%'>
         <StyledIconButton
           size='small'
           onClick={() => onSelectDate && onSelectDate(day.day)}
           isSelected={isSelected}
           colors={colors}
           sx={{
-            border: isToday ? '1px solid #575D67' : null,
+            border: isToday ? colors?.small?.today?.border || '1px solid #575D67' : null,
           }}
         >
           <Box display='flex' flexDirection='column' justifyContent='center'>
@@ -60,9 +62,9 @@ const Day: FC<any> = ({ day, key }) => {
                   color={
                     day.inMonth
                       ? isSelected
-                        ? colors.small.selected.text
-                        : colors.small.unselected.text
-                      : colors.small.notInMonth.text
+                        ? colors?.small?.selected?.text
+                        : colors?.small?.unselected?.text
+                      : colors?.small?.notInMonth?.text
                   }
                   fontSize='13.2px'
                   fontWeight='600'

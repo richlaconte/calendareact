@@ -1,0 +1,19 @@
+.month {
+  gap: 8px;
+  border: 1px solid black;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.month-week { 
+  gap: 8px;
+}
+
+.month-day {
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.month-day:hover {
+  background-color: #eee;
+}

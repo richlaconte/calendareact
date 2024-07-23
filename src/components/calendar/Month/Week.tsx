@@ -23,11 +23,12 @@ const Week: FC<WeekProps> = ({ week, weekIndex, onMouseDown, onMouseOver, mouseD
 
   return (
     <Box
+      className='month-week'
       display='flex'
       flexGrow='1'
       height='100%'
       sx={{
-        borderTop: weekIndex === 0 ? 'none' : colors.month.border,
+        borderTop: weekIndex === 0 ? 'none' : colors?.month?.border,
       }}
     >
       {week.map((day, i) => {

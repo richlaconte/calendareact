@@ -22,13 +22,15 @@ const Small = () => {
           </Box>
         ))}
       </Box>
-      {monthWeeks.map((week, i) => (
-        <Box key={i} display='flex'>
-          {week.map((day, i) => (
-            <Day day={day} key={i} />
-          ))}
-        </Box>
-      ))}
+      <Box display='flex' flexDirection='column' gap='6px'>
+        {monthWeeks.map((week, i) => (
+          <Box key={i} display='flex' gap='6px'>
+            {week.map((day, i) => (
+              <Day day={day} key={i} />
+            ))}
+          </Box>
+        ))}
+      </Box>
     </Box>
   )
 }

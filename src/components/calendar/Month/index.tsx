@@ -39,6 +39,7 @@ const Month = () => {
 
   return (
     <Box
+      className='month'
       display='flex'
       height='100%'
       flexGrow='1'

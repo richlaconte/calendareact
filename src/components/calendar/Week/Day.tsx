@@ -55,7 +55,7 @@ const findAllOverlappingEvents = (initialStart: dayjs.Dayjs, initialEnd: dayjs.D
 }
 
 const Day: FC<DayProps> = ({ day, onSelectTime }) => {
-  const { eventsByDay, selectedDate } = useCalendar()
+  const { eventsByDay, selectedDate, colors } = useCalendar()
   const [mouseDown, setMouseDown] = React.useState(false)
 
   const [start, setStart] = React.useState<{ day: null | Dayjs; hour: number }>({
@@ -140,7 +140,8 @@ const Day: FC<DayProps> = ({ day, onSelectTime }) => {
         flexDirection='column'
         width='100%'
         sx={{
-          backgroundColor: day.format('YYYY-MM-DD') === dayjs().format('YYY') ? 'lightblue' : 'none',
+          backgroundColor:
+            day.format('YYYY-MM-DD') === dayjs().format('YYY') ? colors?.week?.today?.background : 'none',
         }}
       >
         {Array(48)
@@ -233,7 +234,7 @@ const Day: FC<DayProps> = ({ day, onSelectTime }) => {
                 sx={{
                   backgroundColor:
                     start.hour === i && start?.day !== null && start?.day.format('ddd') === dayOfWeek
-                      ? '#D6D6D6'
+                      ? colors?.week?.selectedArea
                       : mouseDown &&
                         start.day !== null &&
                         start?.day.format('ddd') === dayOfWeek &&
@@ -241,11 +242,11 @@ const Day: FC<DayProps> = ({ day, onSelectTime }) => {
                         end.day !== null &&
                         end?.day.format('ddd') === dayOfWeek &&
                         end.hour > i
-                      ? '#D6D6D6'
+                      ? colors?.week?.selectedArea
                       : isToday
-                      ? '#eaf6ff'
+                      ? colors?.week?.today?.background
                       : isSelectedDate
-                      ? '#F0F1F2'
+                      ? colors?.week?.selected?.background
                       : 'white',
                   boxShadow: '-1px -1px 0px 0px #D6D6D6 inset;',
                   cursor: mouseDown ? 'move' : 'default',

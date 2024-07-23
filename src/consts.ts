@@ -4,35 +4,24 @@ export const defaultColors: Colors = {
   primary: '#4caf50',
   secondary: '#ff9100',
   week: {
-    background: {
-      thisMonth: {
-        selecting: '#e0e0e0',
-        static: '#ffffff',
-        event: '#e0e0e0',
-      },
-      otherMonth: {
-        static: '#e0e0e0',
-      },
+    today: {
+      background: '#F0F1F2',
+    },
+    selected: {
+      background: '#eaf6ff',
     },
   },
-  month: {
-    background: {
-      thisMonth: {
-        selecting: '#B7C9E2',
-        static: '#ffffff',
-        event: '#6699CD',
-        today: '#B5C7CC',
-      },
-      otherMonth: {
-        static: '#e0e0e0',
-      },
-    },
-    border: '1px solid black',
-    text: {
-      event: '#ffffff',
-    },
-  },
+  month: {},
   small: {
+    today: {
+      background: undefined,
+      border: '1px solid #575D67',
+      text: '#2C2F35',
+      dots: '#ffffff',
+      hover: {
+        background: '#6BDA94',
+      },
+    },
     selected: {
       background: '#D9F3E3',
       text: '#2C2F35',
@@ -42,7 +31,7 @@ export const defaultColors: Colors = {
       },
     },
     unselected: {
-      background: null,
+      background: undefined,
       text: '#575D67',
       dots: '#D6D6D6',
       hover: {

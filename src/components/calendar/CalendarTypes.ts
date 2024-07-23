@@ -22,61 +22,40 @@ export type Error = {
   color: string
 }
 
+type Color = {
+  background?: string
+  border?: string
+  text?: string
+  dots?: string
+}
+
+interface ColorWithHover extends Color {
+  hover?: Color
+}
+
 export type Colors = {
-  primary: string
-  secondary: string
-  week: {
-    background: {
-      thisMonth: {
-        selecting: string
-        static: string
-        event: string
-      }
-      otherMonth: {
-        static: string
-      }
-    }
+  primary?: string
+  secondary?: string
+  defaultEvent?: string
+  small?: {
+    today?: ColorWithHover
+    selected?: ColorWithHover
+    unselected?: ColorWithHover
+    notInMonth?: ColorWithHover
   }
-  month: {
-    background: {
-      thisMonth: {
-        selecting: string
-        static: string
-        event: string
-        today: string
-      }
-      otherMonth: {
-        static: string
-      }
-    }
-    border: string
-    text: {
-      event: string
-    }
+  week?: {
+    today?: Color
+    selected?: Color
+    unselected?: Color
+    notInMonth?: Color
+    selectedArea?: string
   }
-  small: {
-    selected: {
-      background: string | null
-      text: string
-      dots: string
-      hover: {
-        background: string | null
-      }
-    }
-    unselected: {
-      background: string | null
-      text: string
-      dots: string
-      hover: {
-        background: string | null
-      }
-    }
-    notInMonth: {
-      background: string
-      text: string
-      hover: {
-        background: string
-      }
-    }
+  month?: {
+    today?: Color
+    selected?: Color
+    unselected?: Color
+    notInMonth?: Color
+    border?: string
+    selectedArea?: string
   }
 }

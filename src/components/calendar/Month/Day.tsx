@@ -16,23 +16,27 @@ const Day: FC<
     end: Dayjs | null
   }
 > = ({ day, inMonth, dayInWeekIndex, onMouseDown, onMouseOver, start, end }) => {
-  const { events, colors } = useCalendar()
+  const { events, colors, selectedDate } = useCalendar()
   const dayNumber = day.format('DD')
 
   const today = dayjs()
   const isToday = day.isSame(today, 'day')
+  const isSelected = day.isSame(selectedDate, 'day')
 
   const getColor = () => {
     if (inMonth) {
       if (isBetween) {
-        return colors.month.background.thisMonth.selecting
+        return colors?.month?.selectedArea
       }
       if (isToday) {
-        return colors.month.background.thisMonth.today
+        return colors?.month?.today?.background
       }
-      return colors.month.background.thisMonth.static
+      if (isSelected) {
+        return colors?.month?.selected?.background
+      }
+      return colors?.month?.unselected?.background
     }
-    return colors.month.background.otherMonth.static
+    return colors.month?.notInMonth?.background
   }
 
   // check if the day is between start and end
@@ -51,6 +55,7 @@ const Day: FC<
 
   return (
     <Box
+      className='month-day'
       display='flex'
       flexGrow='1'
       width='100%'
@@ -58,7 +63,7 @@ const Day: FC<
       paddingTop='10px'
       sx={{
         backgroundColor: getColor(),
-        borderLeft: dayInWeekIndex === 0 ? 'none' : colors.month.border,
+        borderLeft: dayInWeekIndex === 0 ? 'none' : colors?.month?.border,
       }}
       onMouseDown={(e: any) => {
         if (!inMonth || e?.target?.classList?.contains('event')) return

@@ -3,7 +3,7 @@ import { Dayjs } from 'dayjs'
 import Week from './Week'
 import Month from './Month'
 
-import { Event } from './CalendarTypes'
+import { Colors, Event } from './CalendarTypes'
 
 import CalendarContextProvider from '../../contexts/calendarContext'
 import Small from './Small'
@@ -13,7 +13,7 @@ type CalendarProps = {
   events: Event[]
   onSelectTime?: (start: Dayjs | null, end: Dayjs | null) => unknown
   onSelectEvent?: (event: Event | null | undefined) => unknown
-  onSelectDate?: (date: Dayjs) => unknown
+  onSelectDate?: (date: Dayjs) => unknown | void
   selectedDate?: Dayjs
   onEditEvent?: (event: Event) => unknown
   onDeleteEvent?: (event: Event) => unknown
@@ -21,6 +21,7 @@ type CalendarProps = {
   showApprove?: boolean
   errors?: any
   dayActions?: any
+  colors?: Colors
 }
 
 const Calendar: FC<CalendarProps> = ({
@@ -36,6 +37,7 @@ const Calendar: FC<CalendarProps> = ({
   showApprove,
   errors,
   dayActions,
+  colors,
 }) => {
   if (view === 'week')
     return (
@@ -52,6 +54,7 @@ const Calendar: FC<CalendarProps> = ({
         showApprove={showApprove}
         errors={errors}
         dayActions={dayActions}
+        colors={colors}
       >
         <Week />
       </CalendarContextProvider>
@@ -72,6 +75,7 @@ const Calendar: FC<CalendarProps> = ({
         showApprove={showApprove}
         errors={errors}
         dayActions={dayActions}
+        colors={colors}
       >
         <Month />
       </CalendarContextProvider>
@@ -91,6 +95,7 @@ const Calendar: FC<CalendarProps> = ({
       showApprove={showApprove}
       errors={errors}
       dayActions={dayActions}
+      colors={colors}
     >
       <Small />
     </CalendarContextProvider>
