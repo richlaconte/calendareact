@@ -1,14 +1,16 @@
 # calendaReact
 A simple react+dayjs calendar component with 3 views:
-- Small
-<img src="./example/public/small.png" alt="small" width="200"/>
-- Week
-<img src="./example/public/small.png" alt="week" width="300"/>
-- Month
-<img src="./example/public/small.png" alt="month" width="300"/>
+### Small
+<img src="./example/public/small.png" alt="small" width="300"/>
+
+### Week
+<img src="./example/public/week.png" alt="week" width="400"/>
+
+### Month
+<img src="./example/public/month.png" alt="month" width="400"/>
 
 ## Example app
-[https://richlaconte.github.io/calendareact/](View the example app here)
+[View the example app here](https://richlaconte.github.io/calendareact/)
 
 ## Installation
 ```npm i calendareact```
