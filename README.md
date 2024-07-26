@@ -24,10 +24,21 @@ function App() {
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs())
   return (
     <Calendar
+      // events - list of events to display in the calendar
       events={[]}
-      selectedDate={selectedDate}
-      onSelectDate={(date: dayjs.Dayjs) => setSelectedDate(date)}
       colors={colors}
+      selectedDate={selectedDate}
+      onSelectTime={onSelectTime}
+      onSelectDate={(date: dayjs.Dayjs) => setSelectedDate(date)}
+      onSelectEvent={onSelectEvent}
+      onEditEvent={onEditEvent}
+      onDeleteEvent={onDeleteEvent}
+      onApproveEvent={onApproveEvent}
+      showApprove={showApprove}
+      // errors - display errors on day headers
+      errors={errors}
+      // dayActions - Add buttons to the day headers
+      dayActions={dayActions}
     />
   );
 }
