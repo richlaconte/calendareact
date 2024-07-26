@@ -35,11 +35,11 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-      - name: Navigate to the example folder
-        run: cd example
       - name: Install dependencies
+        working-directory: ./example
         run: npm ci
       - name: Build
+        working-directory: ./example
         run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v4
