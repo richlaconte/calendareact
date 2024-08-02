@@ -1,4 +1,10 @@
 # calendaЯReact
+
+## Example app
+[View the example app here](https://richlaconte.github.io/calendareact/)
+
+## Overview
+
 A simple react+dayjs calendar component with 3 views:
 ### Small
 <img src="./example/public/small.png" alt="small" width="300"/>
@@ -8,9 +14,6 @@ A simple react+dayjs calendar component with 3 views:
 
 ### Month
 <img src="./example/public/month.png" alt="month" width="600"/>
-
-## Example app
-[View the example app here](https://richlaconte.github.io/calendareact/)
 
 ## Installation
 ```npm i calendareact```
