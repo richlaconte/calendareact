@@ -209,7 +209,7 @@ const Day: FC<DayProps> = ({ day, onSelectTime }) => {
             return (
               <Box
                 key={i}
-                id={`timeSlot-${i/2}`}
+                id={`timeSlot-${i / 2}`}
                 className={`emptySlot ${newEvents.length > 1 ? 'overlap' : ''}`}
                 height='100%'
                 width='100%'

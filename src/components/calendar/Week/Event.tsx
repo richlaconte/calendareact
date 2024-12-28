@@ -47,17 +47,10 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
 
   const eventLength = event.end.diff(event.start, 'minute')
   console.log('eventLength', eventLength)
-  const eventHeight = ((eventLength / 60) * 36 * 2) - 4
+  const eventHeight = (eventLength / 60) * 36 * 2 - 4
 
   return (
-    <Box 
-      display='flex' 
-      flexGrow={1}
-      height='36px'
-      width='100%' 
-
-      alignItems={event.isPartialStart ? 'flex-end' : ''}
-    >
+    <Box display='flex' flexGrow={1} height='36px' width='100%' alignItems={event.isPartialStart ? 'flex-end' : ''}>
       <div
         className='event'
         style={{
