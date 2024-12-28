@@ -135,6 +135,7 @@ const Day: FC<DayProps> = ({ day, onSelectTime }) => {
       onMouseUp={onMouseUp}
     >
       <Box
+        id={`day-${day.format('YYYY-MM-DD')}`}
         display='flex'
         flexGrow='1'
         flexDirection='column'
@@ -180,7 +181,7 @@ const Day: FC<DayProps> = ({ day, onSelectTime }) => {
               isPartialEnd = slotEnd.isAfter(eventEnd) && slotStart.isBefore(eventEnd)
 
               // if isBetween/isStart/isEnd is true, then this event is in this slot
-              if (isBetween || isStart || isEnd || isPartialStart || isPartialEnd)
+              if (isStart)
                 newEvents.push({
                   ...event,
                   isStart: isStart,
@@ -208,6 +209,7 @@ const Day: FC<DayProps> = ({ day, onSelectTime }) => {
             return (
               <Box
                 key={i}
+                id={`timeSlot-${i/2}`}
                 className={`emptySlot ${newEvents.length > 1 ? 'overlap' : ''}`}
                 height='100%'
                 width='100%'
@@ -230,6 +232,7 @@ const Day: FC<DayProps> = ({ day, onSelectTime }) => {
                 onMouseOver={() => {
                   if (!mouseDown) return
                   if (i >= start.hour) return setEnd({ day, hour: i + 1 })
+                  if (i < start.hour) return setStart({ day, hour: i })
                 }}
                 sx={{
                   backgroundColor:

@@ -45,23 +45,36 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
     return '0px'
   }
 
+  const eventLength = event.end.diff(event.start, 'minute')
+  console.log('eventLength', eventLength)
+  const eventHeight = ((eventLength / 60) * 36 * 2) - 4
+
   return (
-    <Box display='flex' flexGrow={1} height='100%' width='100%' alignItems={event.isPartialStart ? 'flex-end' : ''}>
+    <Box 
+      display='flex' 
+      flexGrow={1}
+      height='36px'
+      width='100%' 
+
+      alignItems={event.isPartialStart ? 'flex-end' : ''}
+    >
       <div
         className='event'
         style={{
+          position: 'relative',
+          top: '0px',
+          left: '0px',
           marginTop: marginTop(),
           marginBottom: event.isEnd ? '2px' : '0px',
+          marginRight: '2px',
           zIndex: 1,
           backgroundColor: event?.color?.bg || event?.project?.colors?.background || '#D6D6D6',
-          height: `calc(100% + ${
-            (event.isPartialStart || event.isStart ? -2 : 0) + (event?.isPartialEnd || event.isEnd ? -2 : 0)
-          }px)`,
+          height: eventHeight + 'px',
           borderLeft: `5px solid ${event?.color?.border || event?.project?.colors?.border || '#333333'}`,
           borderTopRightRadius: event.isStart || event.isPartialStart ? '5px' : '0px',
           borderTopLeftRadius: event.isStart || event.isPartialStart ? '5px' : '0px',
-          borderBottomRightRadius: event.isEnd || event.isPartialEnd ? '5px' : '0px',
-          borderBottomLeftRadius: event.isEnd || event.isPartialEnd ? '5px' : '0px',
+          borderBottomRightRadius: '5px',
+          borderBottomLeftRadius: '5px',
           cursor: 'pointer',
           flexGrow: 1,
         }}
@@ -151,7 +164,7 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
             </Box>
             <Box>
               {event.start?.format('h:mm A')} - {event.end?.format('h:mm A')} (
-              {event.end.diff(event.start, 'hour', true)} hrs)
+              {event.end.diff(event.start, 'hour', true).toFixed(2)} hrs)
             </Box>
           </Box>
           <Box display='flex' justifyContent='flex-end'>
