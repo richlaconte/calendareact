@@ -181,7 +181,8 @@ const Day: FC<DayProps> = ({ day, onSelectTime }) => {
               isPartialEnd = slotEnd.isAfter(eventEnd) && slotStart.isBefore(eventEnd)
 
               // if isBetween/isStart/isEnd is true, then this event is in this slot
-              if (isStart)
+              // if the event starts within this slot, then push it into the newEvents array
+              if (slotStart.isSameOrBefore(eventStart) && slotEnd.isSameOrAfter(eventStart)) {
                 newEvents.push({
                   ...event,
                   isStart: isStart,
@@ -199,8 +200,6 @@ const Day: FC<DayProps> = ({ day, onSelectTime }) => {
                     end: slotEnd,
                   },
                 })
-              else {
-                newEvents.push({ id: event.id })
               }
             })
 
@@ -211,18 +210,14 @@ const Day: FC<DayProps> = ({ day, onSelectTime }) => {
                 key={i}
                 id={`timeSlot-${i / 2}`}
                 className={`emptySlot ${newEvents.length > 1 ? 'overlap' : ''}`}
-                height='100%'
+                height='36px'
                 width='100%'
-                display='flex'
+
                 flexDirection={newEvents.length > 1 ? 'column' : 'row'}
-                gap={0.5}
                 alignItems='center'
-                justifyContent='center'
                 borderBottom='none'
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 onMouseDown={(e: any) => {
-                  // if (newEvents.length) return
-                  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
                   if (e?.target?.classList?.contains('emptySlot')) {
                     setMouseDown(true)
                     setStart({ day, hour: i })
@@ -269,7 +264,7 @@ const Day: FC<DayProps> = ({ day, onSelectTime }) => {
                   </>
                 )*/}
                 {newEvents.map((event: any) => {
-                  if (!event?.title) return <Box flexGrow={1} borderLeft='5px solid' />
+                  if (!event?.title) return <Box borderLeft='5px solid' />
                   // eslint-disable-next-line react/jsx-key
                   return <Event event={event} i={i} />
                 })}
