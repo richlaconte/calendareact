@@ -212,7 +212,6 @@ const Day: FC<DayProps> = ({ day, onSelectTime }) => {
                 className={`emptySlot ${newEvents.length > 1 ? 'overlap' : ''}`}
                 height='36px'
                 width='100%'
-
                 flexDirection={newEvents.length > 1 ? 'column' : 'row'}
                 alignItems='center'
                 borderBottom='none'

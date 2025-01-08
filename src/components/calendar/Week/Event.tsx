@@ -46,20 +46,21 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
 
   const startDiff = event.start.diff(dayjs(event.start).startOf('hour'), 'minute')
   const eventOffset = startDiff >= 30 ? startDiff - 30 : startDiff
-  const eventTop = eventOffset / 30 * 36
+  const eventTop = (eventOffset / 30) * 36
 
   return (
     <Box position='relative' top='0px'>
-      <Tooltip 
-        placement='top' 
-        arrow 
-        disableInteractive 
+      <Tooltip
+        placement='top'
+        arrow
+        disableInteractive
         componentsProps={{
           tooltip: {
             sx: {
               bgcolor: event?.color?.bg || event?.project?.colors?.background || '#D6D6D6',
               borderLeft: `5px solid ${event?.color?.border || event?.project?.colors?.border || '#333333'}`,
-              boxShadow: '0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)',
+              boxShadow:
+                '0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)',
               '& .MuiTooltip-arrow': {
                 color: event?.color?.bg || event?.project?.colors?.background || '#D6D6D6',
               },
@@ -67,16 +68,18 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
           },
         }}
         title={
-        eventHeight <= 20 &&
-        <Box>
-          <Typography>{event.title}</Typography>
-          <Box display='flex'>
-            <Typography>{event.start.format('h:mm A')}</Typography>
-            <Typography sx={{ mx: 1 }}>-</Typography>
-            <Typography>{event.end.format('h:mm A')}</Typography>
-          </Box>
-        </Box>
-      }>
+          eventHeight <= 20 && (
+            <Box>
+              <Typography>{event.title}</Typography>
+              <Box display='flex'>
+                <Typography>{event.start.format('h:mm A')}</Typography>
+                <Typography sx={{ mx: 1 }}>-</Typography>
+                <Typography>{event.end.format('h:mm A')}</Typography>
+              </Box>
+            </Box>
+          )
+        }
+      >
         <div
           className='event'
           style={{
@@ -108,16 +111,14 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
                 overflow: 'hidden',
               }}
             >
-              {
-                eventHeight > 20 &&
+              {eventHeight > 20 && (
                 <Typography noWrap textOverflow='ellipsis'>
                   {event?.title}
                 </Typography>
-              }
+              )}
             </Box>
           </Box>
-          {
-            eventHeight > 46 &&
+          {eventHeight > 46 && (
             <Box maxWidth='100%' position='relative'>
               <Box
                 sx={{
@@ -132,7 +133,7 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
                 </Typography>
               </Box>
             </Box>
-          }
+          )}
         </div>
       </Tooltip>
       <Popover
@@ -144,8 +145,7 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
       >
         <Box p={2} width='302px'>
           <Box display='flex' justifyContent='space-between' alignItems='center' mb={1}>
-            {
-              event?.project?.title ?
+            {event?.project?.title ? (
               <Box
                 borderLeft={`5px solid ${event?.project?.colors?.border}`}
                 bgcolor={event?.project?.colors?.background}
@@ -154,7 +154,7 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
               >
                 <Typography variant='caption'>{event?.project?.title}</Typography>
               </Box>
-              :
+            ) : (
               <Box>
                 <Button
                   variant='outlined'
@@ -165,7 +165,7 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
                   Add project
                 </Button>
               </Box>
-            }
+            )}
             <Box display='flex'>
               <Button
                 onClick={handleDelete}
