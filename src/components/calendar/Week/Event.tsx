@@ -151,6 +151,7 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
                 bgcolor={event?.project?.colors?.background}
                 borderRadius='5px'
                 px={1}
+                mr={2}
               >
                 <Typography variant='caption'>{event?.project?.title}</Typography>
               </Box>
