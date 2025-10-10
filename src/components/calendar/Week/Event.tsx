@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { FC, useState } from 'react'
-import { Box, Button, Popover, Tooltip, Typography } from '@mui/material'
+import { Box, Chip, Button, Paper, Popover, Tooltip, Typography } from '@mui/material'
 import duration from 'dayjs/plugin/duration'
 
 import AddIcon from '@mui/icons-material/Add'
@@ -18,7 +18,7 @@ dayjs.extend(duration)
 const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
-  const { onSelectEvent, onDeleteEvent, onApproveEvent, showApprove } = useCalendar()
+  const { onSelectEvent, onDeleteEvent, onApproveEvent, showApprove, isDarkMode } = useCalendar()
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget)
@@ -143,7 +143,7 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
         onClose={handleClose}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <Box p={2} width='302px'>
+        <Box p={2} width='320px'>
           <Box display='flex' justifyContent='space-between' alignItems='center' mb={1}>
             {event?.project?.title ? (
               <Box
@@ -206,25 +206,45 @@ const Event: FC<{ event: any; i: any }> = ({ event, i }) => {
           <Box>
             <Typography fontSize='18px'>{event.title}</Typography>
           </Box>
-          {event?.description && (
+          {event?.description && event?.description !== '' && (
             <Box>
               <Typography noWrap>{event?.description}</Typography>
             </Box>
           )}
-          <Box display='flex' mt={2}>
-            <Box mr={2}>
-              <EventIcon />
-            </Box>
-            <Box>{event.start?.format('MMMM, DD YYYY')}</Box>
+          <Box display='flex' gap={0.5} flexWrap='wrap' mt={event?.tags?.length ? 1 : 0}>
+            {event?.tags?.map((tag: any) => (
+              <Chip
+                key={tag.id}
+                label={tag.name}
+                size='small'
+                onClick={() => handleEdit()}
+                onDelete={() => handleEdit()}
+                sx={{
+                  backgroundColor: isDarkMode ? tag.colors?.border : tag.colors?.background,
+                  border: `1px solid ${isDarkMode ? tag.colors?.background : tag.colors?.border}`,
+                  color: '#000',
+                }}
+              />
+            )) || <></>}
           </Box>
-          <Box display='flex'>
-            <Box mr={2}>
-              <AccessTimeIcon />
-            </Box>
-            <Box>
-              {event.start?.format('h:mm A')} - {event.end?.format('h:mm A')} (
-              {event.end.diff(event.start, 'hour', true).toFixed(2)} hrs)
-            </Box>
+          <Box mt={1}>
+            <Paper variant='outlined' sx={{ p: 1, pb: 0 }}>
+              <Box display='flex'>
+                <Box mr={1}>
+                  <EventIcon />
+                </Box>
+                <Box>{event.start?.format('MMMM, DD YYYY')}</Box>
+              </Box>
+              <Box display='flex'>
+                <Box mr={1}>
+                  <AccessTimeIcon />
+                </Box>
+                <Box>
+                  {event.start?.format('h:mm A')} - {event.end?.format('h:mm A')} (
+                  {event.end.diff(event.start, 'hour', true).toFixed(2)} hrs)
+                </Box>
+              </Box>
+            </Paper>
           </Box>
         </Box>
       </Popover>

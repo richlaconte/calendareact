@@ -26,6 +26,7 @@ type CalendarContextType = {
   showApprove?: boolean
   errors?: ErrorList
   dayActions: DayActions
+  isDarkMode?: boolean
 }
 
 type CalendarContextProviderProps = {
@@ -43,6 +44,7 @@ type CalendarContextProviderProps = {
   showApprove?: boolean
   errors?: ErrorList
   dayActions?: DayActions
+  isDarkMode?: boolean
 }
 
 const CalendarContextProvider: FC<CalendarContextProviderProps> = ({
@@ -60,6 +62,7 @@ const CalendarContextProvider: FC<CalendarContextProviderProps> = ({
   showApprove,
   errors,
   dayActions,
+  isDarkMode,
 }) => {
   const viewOffset = undefined
 
@@ -148,6 +151,7 @@ const CalendarContextProvider: FC<CalendarContextProviderProps> = ({
     showApprove,
     errors: errors || {},
     dayActions,
+    isDarkMode,
   }
 
   return <Context.Provider value={value}>{children}</Context.Provider>

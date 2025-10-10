@@ -22,6 +22,7 @@ type CalendarProps = {
   errors?: any
   dayActions?: any
   colors?: Colors
+  isDarkMode?: boolean
 }
 
 const Calendar: FC<CalendarProps> = ({
@@ -38,6 +39,7 @@ const Calendar: FC<CalendarProps> = ({
   errors,
   dayActions,
   colors,
+  isDarkMode,
 }) => {
   if (view === 'week')
     return (
@@ -55,6 +57,7 @@ const Calendar: FC<CalendarProps> = ({
         errors={errors}
         dayActions={dayActions}
         colors={colors}
+        isDarkMode={isDarkMode}
       >
         <Week />
       </CalendarContextProvider>
@@ -76,6 +79,7 @@ const Calendar: FC<CalendarProps> = ({
         errors={errors}
         dayActions={dayActions}
         colors={colors}
+        isDarkMode={isDarkMode}
       >
         <Month />
       </CalendarContextProvider>
@@ -96,6 +100,7 @@ const Calendar: FC<CalendarProps> = ({
       errors={errors}
       dayActions={dayActions}
       colors={colors}
+      isDarkMode={isDarkMode}
     >
       <Small />
     </CalendarContextProvider>
